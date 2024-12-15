@@ -57,7 +57,7 @@ const Nav = () => {
           : ""
       }`}
     >
-      <div className="container flex items-center justify-between max-w-4xl p-8 mx-auto">
+      <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto sm:p-8">
         {/* Logo */}
         <Link className="cursor-pointer hover:opacity-90" href="/">
           <Image
