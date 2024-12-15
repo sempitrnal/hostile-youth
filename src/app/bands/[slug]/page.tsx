@@ -1,15 +1,8 @@
 import BandPageComponent from "@/components/BandPageComponent";
 import { client, urlFor } from "@/sanity/client";
-import { Metadata, ResolvingMetadata } from "next";
-import {
-  PortableText,
-  PortableTextReactComponents,
-  SanityDocument,
-} from "next-sanity";
-import Image from "next/image";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FaBandcamp, FaFacebook, FaInstagram, FaSpotify } from "react-icons/fa";
 import { Band } from "../page";
 
 const BAND_QUERY = `*[_type == "band" && slug.current == $slug][0]`;
@@ -26,10 +19,7 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // read route params
   const slug = (await params).slug;
 

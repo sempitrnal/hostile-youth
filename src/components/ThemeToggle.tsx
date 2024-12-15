@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FaMoon } from "react-icons/fa";
 import { LuSun } from "react-icons/lu";
 
 export default function ThemeToggle() {
