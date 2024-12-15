@@ -3,7 +3,7 @@
 import { Band } from "@/app/bands/page";
 import BandCard from "@/components/BandCard";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const BandsList = ({ bands: initialBands }: { bands: Band[] }) => {
   const router = useRouter();
@@ -33,10 +33,7 @@ const BandsList = ({ bands: initialBands }: { bands: Band[] }) => {
 
   // Update search query and fetch data
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Clean the string: trim whitespace and remove special characters
     const query = e.target.value.replace(/[^\w\s]/gi, "").trim();
-    console.log("🚀 ~ handleSearch ~ query:", query);
-
     setSearchQuery(query);
 
     // Update URL params
@@ -48,6 +45,16 @@ const BandsList = ({ bands: initialBands }: { bands: Band[] }) => {
 
     fetchBands(query);
   };
+
+  // Group bands alphabetically
+  const groupedBands = useMemo(() => {
+    return bands.reduce((acc: Record<string, Band[]>, band) => {
+      const firstLetter = band.bandName[0]?.toUpperCase() || "#"; // Default to '#' for empty names
+      if (!acc[firstLetter]) acc[firstLetter] = [];
+      acc[firstLetter].push(band);
+      return acc;
+    }, {});
+  }, [bands]);
 
   return (
     <>
@@ -65,14 +72,25 @@ const BandsList = ({ bands: initialBands }: { bands: Band[] }) => {
       {/* Loading State */}
       {loading && <p className="text-gray-500">Loading...</p>}
 
-      {/* Bands List */}
-      <div className="flex flex-col gap-5">
-        {!loading && bands.length > 0 ? (
-          bands.map((band) => <BandCard key={band._id} band={band} />)
-        ) : !loading && bands.length === 0 ? (
-          <p className="text-lg text-gray-500">No bands found.</p>
-        ) : null}
-      </div>
+      {/* Alphabetical Bands List */}
+      {!loading && Object.keys(groupedBands).length > 0 ? (
+        <div>
+          {Object.keys(groupedBands)
+            .sort() // Sort alphabetically
+            .map((letter) => (
+              <div key={letter} className="mb-6">
+                <h2 className="mb-4 text-2xl font-dela">{letter}</h2>
+                <div className="flex flex-col gap-5">
+                  {groupedBands[letter].map((band) => (
+                    <BandCard key={band._id} band={band} />
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+      ) : !loading && bands.length === 0 ? (
+        <p className="text-lg text-gray-500">No bands found.</p>
+      ) : null}
     </>
   );
 };
