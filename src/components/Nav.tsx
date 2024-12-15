@@ -111,7 +111,7 @@ const Nav = () => {
 
           {/* Navigation Links */}
           <div
-            className={`lg:flex items-center ${
+            className={`lg:flex lg:gap-5 items-center ${
               isMenuOpen
                 ? "absolute top-full left-0 w-full border bg-white dark:bg-[#0e0e0e] shadow-md flex flex-col lg:flex-row"
                 : "hidden lg:flex"
