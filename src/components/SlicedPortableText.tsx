@@ -28,7 +28,7 @@ export const SlicedBody = ({
       html: ({ value }: { value: any }) => (
         <div
           dangerouslySetInnerHTML={{ __html: value.html }}
-          className="max-w-full my-2 prose"
+          className="max-w-full prose"
         />
       ),
       image: () => null,
@@ -65,12 +65,12 @@ export const SlicedBody = ({
         </h6>
       ),
       blockquote: ({ children }) => (
-        <blockquote className="pl-4 my-4 italic text-gray-600 border-l-4 border-gray-400">
+        <blockquote className="pl-4 italic text-gray-600 border-l-4 border-gray-400">
           {children}
         </blockquote>
       ),
       normal: ({ children }) => (
-        <p className="my-2 text-justify text-gray-600 dark:text-gray-200">
+        <p className="text-sm text-justify text-stone-500 dark:text-gray-100">
           {children}
         </p>
       ),

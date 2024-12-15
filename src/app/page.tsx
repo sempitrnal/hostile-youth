@@ -31,12 +31,15 @@ export default async function IndexPage() {
 
   console.log(postImageUrl);
   return (
-    <main className="container mx-auto min-h-screen max-w-4xl p-8">
-      <h1 className="text-5xl font-dela mb-10">NEWS</h1>
+    <main className="container max-w-4xl min-h-screen p-4 mx-auto sm:p-8">
+      <h1 className="mb-10 text-5xl font-dela">NEWS</h1>
       <ul className="flex flex-col gap-y-4">
         {posts.map((post) => (
-          <li className="peer hover:underline" key={post._id}>
-            <Link className="flex flex-col " href={`/${post.slug.current}`}>
+          <li className="" key={post._id}>
+            <Link
+              className="flex flex-col group/link "
+              href={`/${post.slug.current}`}
+            >
               {postImageUrl(post) && (
                 <Image
                   className="rounded-md shadow-lg mb-2 h-[18rem] object-cover"
@@ -46,16 +49,16 @@ export default async function IndexPage() {
                   height={1080}
                 />
               )}
-              <div className="hover:no-underline">
-                <h2 className="text-3xl mb-2 font-semibold text-[#232323] dark:text-white font-sans text-justify ">
+              <div className="">
+                <h2 className="text-xl lg:text-3xl mb-1 text-justify  group-hover/link:underline  font-black text-[#292929] dark:text-white font-sans  ">
                   {post.title}
                 </h2>
-                <p className="text-gray-400 dark:text-gray-400">
+                <p className="text-sm text-stone-600 group-hover/link:underline dark:text-stone-400">
                   {formatDate(post.publishedAt, "MMMM DD, YYYY")}
                 </p>
-                <SlicedBody body={post.body} length={3} />
               </div>
             </Link>
+            <SlicedBody body={post.body} length={3} />
           </li>
         ))}
       </ul>

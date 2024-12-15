@@ -4,7 +4,7 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="w-full  border-t-[.5px] transition-all border-gray-100 dark:border-stone-800 bg-white dark:bg-[#0e0e0e]">
-      <div className="container flex flex-col items-center gap-5 p-8 mx-auto">
+      <div className="container flex flex-col items-center justify-center gap-5 p-8 mx-auto">
         <p className="text-xl text-centerbg lg:text-3xl text-stone-900 dark:text-white font-dela">
           &copy; HOSTILE YOUTH RECORDS
         </p>

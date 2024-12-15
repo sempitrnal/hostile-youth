@@ -7,9 +7,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+  { name: "News", href: "/news" },
   { name: "Bands", href: "/bands" },
+  { name: "Merch", href: "/merch" },
 ];
 
 const staggeredNavLinks = {
@@ -134,7 +134,7 @@ const Nav = () => {
                     <Link
                       href={link.href}
                       onClick={() => toggleMenu()}
-                      className="p-4 text-xl font-extrabold uppercase font-dela text-stone-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900"
+                      className="p-4 text-xl font-extrabold text-yellow-500 uppercase font-dela dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900"
                     >
                       {link.name}
                     </Link>
@@ -150,7 +150,7 @@ const Nav = () => {
               <Link
                 key={link.href} // Unique key
                 href={link.href}
-                className="text-xl font-extrabold uppercase transition-all duration-300 font-dela text-stone-800 dark:text-white lg:hover:opacity-80"
+                className="text-xl font-extrabold text-blue-600 uppercase transition-all duration-300 font-dela dark:text-white lg:hover:opacity-80"
               >
                 {link.name}
               </Link>
