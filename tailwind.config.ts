@@ -9,6 +9,10 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        dela: ["Dela Gothic One", "sans-serif"],
+        oswald: ["Oswald", "sans-serif"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

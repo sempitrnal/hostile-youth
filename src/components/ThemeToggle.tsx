@@ -30,7 +30,10 @@ export default function ThemeToggle() {
   };
 
   return (
-    <button onClick={toggleTheme} className="p-2">
+    <button
+      onClick={toggleTheme}
+      className="p-2 rounded-md dark:bg-stone-900 bg-stone-100 hover:opacity-80 transition-all "
+    >
       {theme === "light" ? (
         <FaMoon className="text-xl text-gray-800 " />
       ) : (

@@ -5,6 +5,8 @@ import { client } from "@/sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import Image from "next/image";
+import { SlicedBody } from "@/components/SlicedPortableText";
+import { formatDate } from "@/utils/dateFormatter";
 
 const POSTS_QUERY = `*[
   _type == "post"
@@ -30,9 +32,10 @@ export default async function IndexPage() {
   console.log(postImageUrl);
   return (
     <main className="container mx-auto min-h-screen max-w-4xl p-8">
+      <h1 className="text-5xl font-dela mb-10">NEWS</h1>
       <ul className="flex flex-col gap-y-4">
         {posts.map((post) => (
-          <li className=" hover:underline" key={post._id}>
+          <li className="peer hover:underline" key={post._id}>
             <Link className="flex flex-col " href={`/${post.slug.current}`}>
               {postImageUrl(post) && (
                 <Image
@@ -43,9 +46,14 @@ export default async function IndexPage() {
                   height={1080}
                 />
               )}
-              <div className="">
-                <h2 className="text-xl font-semibold ">{post.title}</h2>
-                <p>{new Date(post.publishedAt).toLocaleDateString()}</p>
+              <div className="hover:no-underline">
+                <h2 className="text-3xl mb-2 font-semibold text-[#232323] dark:text-white font-sans text-justify ">
+                  {post.title}
+                </h2>
+                <p className="text-gray-400 dark:text-gray-400">
+                  {formatDate(post.publishedAt, "MMMM DD, YYYY")}
+                </p>
+                <SlicedBody body={post.body} length={3} />
               </div>
             </Link>
           </li>
