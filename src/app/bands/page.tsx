@@ -1,7 +1,6 @@
 import BandCard from "@/components/BandCard";
 import { client } from "@/sanity/client";
 import { SanityDocument } from "next-sanity";
-import Link from "next/link";
 const options = { next: { revalidate: 30 } };
 export interface Band extends SanityDocument {
   bandName: string;

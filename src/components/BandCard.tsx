@@ -1,6 +1,5 @@
 import { Band } from "@/app/bands/page";
 import { urlFor } from "@/sanity/client";
-import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 

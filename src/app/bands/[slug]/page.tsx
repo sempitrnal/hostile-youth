@@ -1,20 +1,33 @@
-import { PortableText, SanityDocument } from "next-sanity";
-import { Band } from "../page";
 import { client, urlFor } from "@/sanity/client";
-import Image from "next/image";
 import { components } from "@/utils/portableTextComponents";
+import { PortableText, SanityDocument } from "next-sanity";
+import Image from "next/image";
 import Link from "next/link";
 
 const BAND_QUERY = `*[_type == "band" && slug.current == $slug][0]`;
 interface BandPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 const options = { next: { revalidate: 30 } };
+
+export async function generateStaticParams() {
+  const posts = await client.fetch(`*[_type == "band"]{ slug }`);
+  return posts.map((post: any) => ({ slug: post.slug.current }));
+}
+
+async function getBandData(slug: string): Promise<SanityDocument | null> {
+  return client.fetch(BAND_QUERY, { slug }, options);
+}
 const BandPage = async ({ params }: BandPageProps) => {
-  const { slug } = params;
+  const { slug } = await params;
 
-  const band = await client.fetch<Band>(BAND_QUERY, { slug }, options);
-
+  const band = await getBandData(slug);
+  if (!band)
+    return (
+      <div className="container mx-auto min-h-screen max-w-4xl px-8 py-16 ">
+        Band not found
+      </div>
+    );
   const bandImageUrl = urlFor(band.image)?.url()!;
   return (
     <main className="container mx-auto min-h-screen max-w-4xl px-8 py-16 ">

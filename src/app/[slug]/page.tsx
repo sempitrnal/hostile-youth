@@ -1,6 +1,4 @@
 import { client, urlFor } from "@/sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import {
   PortableText,
   PortableTextReactComponents,
@@ -13,16 +11,21 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
 
 const options = { next: { revalidate: 30 } };
 interface PostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
-
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  const posts = await client.fetch(`*[_type == "post"]{ slug }`);
+  return posts.map((post: any) => ({ slug: post.slug.current }));
+}
+async function getPostData(slug: string): Promise<SanityDocument | null> {
+  return client.fetch(POST_QUERY, { slug }, options);
+}
 export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = params;
-  const post = await client.fetch<SanityDocument>(
-    POST_QUERY,
-    { slug },
-    options
-  );
+  const post = await getPostData((await params).slug);
+  if (!post) {
+    return <div>Post not found</div>;
+  }
 
   const postImageUrl = post.image ? urlFor(post.image)?.url() : null;
   const components: Partial<PortableTextReactComponents> = {
