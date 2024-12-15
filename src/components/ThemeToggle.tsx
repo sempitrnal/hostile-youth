@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { FaSun, FaMoon } from "react-icons/fa";
+import { LuSun } from "react-icons/lu";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<string | null>(null);
@@ -29,7 +31,11 @@ export default function ThemeToggle() {
 
   return (
     <button onClick={toggleTheme} className="p-2">
-      {theme === "light" ? "🌙 " : "☀️ "}
+      {theme === "light" ? (
+        <FaMoon className="text-xl text-gray-800 " />
+      ) : (
+        <LuSun className="text-xl text-yellow-300" />
+      )}
     </button>
   );
 }

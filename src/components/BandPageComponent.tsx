@@ -1,32 +1,11 @@
-import { client, urlFor } from "@/sanity/client";
-import {
-  PortableText,
-  PortableTextReactComponents,
-  type SanityDocument,
-} from "next-sanity";
+import { Band } from "@/app/bands/page";
+import { urlFor } from "@/sanity/client";
+import { PortableText, PortableTextReactComponents } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { FaBandcamp, FaFacebook, FaInstagram, FaSpotify } from "react-icons/fa";
 
-const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
-
-const options = { next: { revalidate: 30 } };
-interface PostPageProps {
-  params: Promise<{ slug: string }>;
-}
-export const dynamicParams = true;
-export async function generateStaticParams() {
-  const posts = await client.fetch(`*[_type == "post"]{ slug }`);
-  return posts.map((post: any) => ({ slug: post.slug.current }));
-}
-async function getPostData(slug: string): Promise<SanityDocument | null> {
-  return client.fetch(POST_QUERY, { slug }, options);
-}
-export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPostData((await params).slug);
-  if (!post) {
-    return <div>Post not found</div>;
-  }
-
+const BandPageComponent = ({ band }: { band: Band }) => {
   const components: Partial<PortableTextReactComponents> = {
     types: {
       code: ({ value }: { value: any }) => (
@@ -116,7 +95,7 @@ export default async function PostPage({ params }: PostPageProps) {
             href={value?.href}
             target={target}
             rel={target === "_blank" ? "noopener noreferrer" : undefined}
-            className="text-white hover:text-white/80 underline"
+            className="text-stone-900 hover:text-stone-800 dark:text-white dark:hover:text-white/80 underline"
           >
             {children}
           </Link>
@@ -125,19 +104,70 @@ export default async function PostPage({ params }: PostPageProps) {
     },
   };
 
-  return (
-    <main className="container mx-auto min-h-screen max-w-4xl p-8 flex flex-col gap-4">
-      <Link href="/" className="hover:underline">
-        ← Back to posts
-      </Link>
+  const { socialLinks } = band;
 
-      <h1 className="text-4xl font-bold mb-8">{post.title}</h1>
-      <div className="prose">
-        <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p>
-        {Array.isArray(post.body) && (
-          <PortableText value={post.body} components={components} />
+  const bandImageUrl = urlFor(band.image)?.url()!;
+
+  return (
+    <>
+      <div className="my-10">
+        <h1 className="text-7xl text-stone-900 font-medium dark:text-white">
+          {band.bandName}
+        </h1>
+        <p className="text-stone-500 dark:text-stone-200">
+          {band.bandDescription}
+        </p>
+      </div>
+      <div className="my-5 flex gap-2 items-center">
+        {socialLinks && socialLinks.instagram && (
+          <Link
+            target="_blank"
+            href={socialLinks.instagram}
+            className="hover:underline "
+          >
+            <FaInstagram className="text-3xl" />
+          </Link>
+        )}
+        {socialLinks && socialLinks.bandcamp && (
+          <Link
+            target="_blank"
+            href={socialLinks.bandcamp}
+            className="hover:underline"
+          >
+            <FaBandcamp className="text-3xl " />
+          </Link>
+        )}
+        {socialLinks && socialLinks.spotify && (
+          <Link
+            target="_blank"
+            href={socialLinks.spotify}
+            className="hover:underline"
+          >
+            <FaSpotify className="text-3xl " />
+          </Link>
+        )}
+        {socialLinks && socialLinks.facebook && (
+          <Link
+            target="_blank"
+            href={socialLinks.facebook}
+            className="hover:underline"
+          >
+            <FaFacebook className="text-3xl " />
+          </Link>
         )}
       </div>
-    </main>
+      <Image
+        src={bandImageUrl}
+        alt={band.bandName}
+        width={1920}
+        height={1080}
+        className=" rounded-md object-cover w-full h-[25rem]"
+      />
+      {Array.isArray(band.body) && (
+        <PortableText value={band.body} components={components} />
+      )}
+    </>
   );
-}
+};
+
+export default BandPageComponent;

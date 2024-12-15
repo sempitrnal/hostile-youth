@@ -1,8 +1,16 @@
+import BandPageComponent from "@/components/BandPageComponent";
 import { client, urlFor } from "@/sanity/client";
-import { components } from "@/utils/portableTextComponents";
-import { PortableText, SanityDocument } from "next-sanity";
+import { Metadata, ResolvingMetadata } from "next";
+import {
+  PortableText,
+  PortableTextReactComponents,
+  SanityDocument,
+} from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { FaBandcamp, FaFacebook, FaInstagram, FaSpotify } from "react-icons/fa";
+import { Band } from "../page";
 
 const BAND_QUERY = `*[_type == "band" && slug.current == $slug][0]`;
 interface BandPageProps {
@@ -14,41 +22,62 @@ export async function generateStaticParams() {
   const posts = await client.fetch(`*[_type == "band"]{ slug }`);
   return posts.map((post: any) => ({ slug: post.slug.current }));
 }
+type Props = {
+  params: Promise<{ slug: string }>;
+};
 
-async function getBandData(slug: string): Promise<SanityDocument | null> {
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = (await params).slug;
+
+  // fetch data
+  const bandData = await getBandData(slug);
+
+  return {
+    title: bandData?.bandName,
+    description: bandData?.bandDescription,
+    openGraph: {
+      title: bandData?.bandName,
+      description: bandData?.bandDescription,
+      images: bandData?.image
+        ? [{ url: urlFor(bandData?.image)?.url()!, alt: bandData?.bandName }]
+        : [],
+      url: `https://hostile-youth.vercel.app/bands/${slug}`,
+      type: "website",
+    },
+  };
+}
+async function getBandData(slug: string): Promise<Band | null> {
   return client.fetch(BAND_QUERY, { slug }, options);
 }
 const BandPage = async ({ params }: BandPageProps) => {
   const { slug } = await params;
 
   const band = await getBandData(slug);
-  if (!band)
-    return (
-      <div className="container mx-auto min-h-screen max-w-4xl px-8 py-16 ">
-        Band not found
-      </div>
-    );
-  const bandImageUrl = urlFor(band.image)?.url()!;
+  if (!band) return notFound();
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    name: band.bandName,
+    description: band.bandDescription,
+    image: urlFor(band.image)?.url()!,
+    url: band.url,
+  };
+
   return (
     <main className="container mx-auto min-h-screen max-w-4xl px-8 py-16 ">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Link href="/bands" className="hover:underline ">
         ← Back to bands
       </Link>
-      <div className="my-10">
-        <h1 className="text-7xl text-stone-900 font-medium">{band.bandName}</h1>
-        <p className="text-stone-500">{band.bandDescription}</p>
-      </div>
-      <Image
-        src={bandImageUrl}
-        alt={band.bandName}
-        width={1920}
-        height={1080}
-        className=" rounded-md object-cover w-full h-[25rem]"
-      />
-
-      {Array.isArray(band.body) && (
-        <PortableText value={band.body} components={components} />
-      )}
+      <BandPageComponent band={band} />
     </main>
   );
 };

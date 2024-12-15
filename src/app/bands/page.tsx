@@ -15,7 +15,7 @@ const Bands = async () => {
   const bands = await client.fetch<Band[]>(BANDS_QUERY, {}, options);
   console.log(bands);
   return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8 ">
+    <main className="container mx-auto min-h-screen max-w-4xl p-8 ">
       <h1 className="text-[5rem] font-medium  mb-8">Bands</h1>
       <div className="flex flex-col gap-5">
         {bands.map((band) => (

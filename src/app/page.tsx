@@ -29,22 +29,24 @@ export default async function IndexPage() {
 
   console.log(postImageUrl);
   return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8">
+    <main className="container mx-auto min-h-screen max-w-4xl p-8">
       <ul className="flex flex-col gap-y-4">
         {posts.map((post) => (
           <li className=" hover:underline" key={post._id}>
-            <Link className="" href={`/${post.slug.current}`}>
+            <Link className="flex flex-col " href={`/${post.slug.current}`}>
               {postImageUrl(post) && (
                 <Image
-                  className="rounded-lg shadow-lg"
+                  className="rounded-md shadow-lg mb-2 h-[18rem] object-cover"
                   src={postImageUrl(post)!}
                   alt={post.title}
                   width={1920}
                   height={1080}
                 />
               )}
-              <h2 className="text-xl font-semibold ">{post.title}</h2>
-              <p>{new Date(post.publishedAt).toLocaleDateString()}</p>
+              <div className="">
+                <h2 className="text-xl font-semibold ">{post.title}</h2>
+                <p>{new Date(post.publishedAt).toLocaleDateString()}</p>
+              </div>
             </Link>
           </li>
         ))}
