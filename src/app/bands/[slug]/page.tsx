@@ -1,4 +1,11 @@
 import BandPageComponent from "@/components/BandPageComponent";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { client, urlFor } from "@/sanity/client";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -59,14 +66,38 @@ const BandPage = async ({ params }: BandPageProps) => {
   };
 
   return (
-    <main className="container mx-auto min-h-screen max-w-4xl px-8 py-16 ">
+    <main className="container max-w-4xl min-h-screen p-8 mx-auto ">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Link href="/bands" className="hover:underline ">
-        ← Back to bands
-      </Link>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <Link
+              className="uppercase transition-colors font-dela hover:text-foreground"
+              href="/"
+            >
+              Home
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <Link
+              className="uppercase transition-colors font-dela hover:text-foreground"
+              href="/bands"
+            >
+              Bands
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="uppercase font-dela">
+              {band.bandName}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <BandPageComponent band={band} />
     </main>
   );

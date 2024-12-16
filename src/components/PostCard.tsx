@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { Skeleton } from "./ui/skeleton";
-import { formatDate } from "@/utils/dateFormatter";
 import { SlicedBody } from "@/components/SlicedPortableText";
+import { formatDate } from "@/utils/dateFormatter";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 export default function PostCard({
   post,
@@ -16,34 +16,31 @@ export default function PostCard({
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500); // 1.5s skeleton duration
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <Link
       className={`flex flex-col group/link ${isLoading ? "cursor-default" : "cursor-pointer"}`}
       href={`/${post.slug.current}`}
     >
-      {/* Image with Skeleton */}
-      <div className="relative w-full mb-2 overflow-hidden rounded-md h-52 sm:h-64 lg:h-80">
-        {isLoading ? (
-          <Skeleton className="absolute top-0 left-0 w-full h-full mb-2" />
-        ) : (
-          postImageUrl && (
-            <Image
-              className="object-cover w-full h-full"
-              src={postImageUrl}
-              alt={post.title}
-              width={1920}
-              height={1080}
-              priority
-            />
-          )
+      <div className="relative w-full h-full overflow-hidden rounded-sm">
+        {/* Loader */}
+        {isLoading && (
+          <Skeleton className="absolute top-0 left-0 w-full h-full rounded-md" />
         )}
-      </div>
 
+        {/* Image */}
+        <Image
+          src={postImageUrl || "/fallback.jpg"} // Fallback for invalid URLs
+          alt={post.title || "Image"}
+          width={1920}
+          height={1080}
+          priority
+          fetchPriority="high"
+          className={`object-cover w-full h-full transition-all duration-500 ${
+            isLoading ? "opacity-0" : "opacity-100"
+          }`}
+          onLoadingComplete={() => setIsLoading(false)} // Set loading to false when done
+        />
+      </div>
       {/* Text with Skeleton */}
       {isLoading ? (
         <div className="mt-2 space-y-2">

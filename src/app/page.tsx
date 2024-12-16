@@ -52,7 +52,7 @@ export default async function IndexPage() {
   return (
     <main className="container max-w-4xl min-h-screen p-4 mx-auto sm:p-8">
       <h1 className="mb-10 text-5xl font-dela">NEWS</h1>
-      <ul className="flex flex-col pb-32 gap-y-20">
+      <ul className="flex flex-col gap-y-20">
         {posts.map((post) => (
           <li className="" key={post._id}>
             <PostCard

@@ -1,4 +1,11 @@
 import PostPagePhotosCarousel from "@/components/PostPagePhotosCarousel";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 import { client, urlFor } from "@/sanity/client";
 import { formatDate } from "@/utils/dateFormatter";
@@ -99,7 +106,7 @@ export default async function PostPage({ params }: PostPageProps) {
       html: ({ value }: { value: any }) => (
         <div
           dangerouslySetInnerHTML={{ __html: value.html }}
-          className="max-w-full my-2 prose"
+          className="max-w-full my-5 prose"
         />
       ),
       image: ({ value }) => (
@@ -113,6 +120,15 @@ export default async function PostPage({ params }: PostPageProps) {
               className="w-full mx-auto my-2 rounded-lg"
             />
           )}
+        </div>
+      ),
+      video: ({ value }) => (
+        <div className="my-6">
+          <video
+            src={value}
+            controls
+            className="w-full mx-auto my-2 rounded-lg"
+          ></video>
         </div>
       ),
     },
@@ -177,15 +193,33 @@ export default async function PostPage({ params }: PostPageProps) {
     },
   };
   return (
-    <main className="container flex flex-col max-w-4xl min-h-screen gap-4 p-4 pb-32 mx-auto lg:p-8">
-      <Link href="/" className="hover:underline">
-        ← Back to posts
-      </Link>
+    <main className="container flex flex-col max-w-4xl min-h-screen gap-4 p-4 mx-auto lg:p-8">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <Link
+              className="uppercase transition-colors font-dela hover:text-foreground"
+              href="/"
+            >
+              Home
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+
+          <BreadcrumbItem>
+            <BreadcrumbPage className="uppercase font-dela">
+              {post.title}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       <h1 className="mb-2 text-4xl font-bold">{post.title}</h1>
       <div className="prose">
-        <p className="text-stone-500">by {post.publisherName}</p>
-        <p className="text-sm text-stone-400">
+        <p className="text-stone-500 dark:text-stone-400">
+          by {post.publisherName}
+        </p>
+        <p className="text-sm text-stone-400 dark:text-stone-600">
           {formatDate(new Date(post.publishedAt), "MMMM DD, YYYY")}
         </p>
         {Array.isArray(post.images) && (
