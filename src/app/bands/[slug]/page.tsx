@@ -66,7 +66,7 @@ const BandPage = async ({ params }: BandPageProps) => {
   };
 
   return (
-    <main className="container max-w-4xl min-h-screen p-8 mx-auto ">
+    <main className="container max-w-4xl min-h-screen p-4 mx-auto lg:p-8 ">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
