@@ -1,10 +1,7 @@
 import { type SanityDocument } from "next-sanity";
-import Link from "next/link";
 
-import { SlicedBody } from "@/components/SlicedPortableText";
+import PostCard from "@/components/PostCard";
 import { client, urlFor } from "@/sanity/client";
-import { formatDate } from "@/utils/dateFormatter";
-import Image from "next/image";
 
 const POSTS_QUERY = `*[
   _type == "post"
@@ -51,11 +48,6 @@ export const generateMetadata = async () => {
 };
 export default async function IndexPage() {
   const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
-  const postImageUrl = (post: any) => {
-    return post.image
-      ? urlFor(post.image)?.width(1920).height(1080).url()
-      : null;
-  };
 
   return (
     <main className="container max-w-4xl min-h-screen p-4 mx-auto sm:p-8">
@@ -63,33 +55,14 @@ export default async function IndexPage() {
       <ul className="flex flex-col pb-32 gap-y-20">
         {posts.map((post) => (
           <li className="" key={post._id}>
-            <Link
-              className="flex flex-col group/link "
-              href={`/${post.slug.current}`}
-            >
-              {postImageUrl(post) && (
-                <Image
-                  className="object-cover h-full mb-2 rounded-md shadow-lg"
-                  src={postImageUrl(post)!}
-                  alt={post.title}
-                  width={1920}
-                  height={1080}
-                  priority
-                />
-              )}
-              <div className="">
-                <h2 className="text-xl lg:text-3xl mb-1 text-justify  group-hover/link:opacity-90 transition-opacity duration-500  font-black text-[#292929] dark:text-white font-sans  ">
-                  {post.title}
-                </h2>
-                <p className="text-sm text-stone-600 dark:text-stone-400">
-                  {post.publisherName}
-                </p>
-                <p className="text-sm text-stone-600 dark:text-stone-400">
-                  {formatDate(post.publishedAt, "MMMM DD, YYYY")}
-                </p>
-              </div>
-              <SlicedBody body={post.body} length={1} />{" "}
-            </Link>
+            <PostCard
+              post={post}
+              postImageUrl={
+                post.image
+                  ? urlFor(post.image)?.width(1920).height(1080).url()!
+                  : null
+              }
+            />
           </li>
         ))}
       </ul>

@@ -1,13 +1,13 @@
 import { urlFor } from "@/sanity/client";
 import { SanityDocument } from "next-sanity";
+import PostImage from "./PostImage";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
+  CarouselPrevious,
 } from "./ui/carousel";
-import Image from "next/image";
 
 const PostPagePhotosCarousel = ({ post }: { post: SanityDocument }) => {
   return (
@@ -23,20 +23,14 @@ const PostPagePhotosCarousel = ({ post }: { post: SanityDocument }) => {
                   key={image._key || index}
                 >
                   <div className="overflow-hidden rounded-lg">
-                    <Image
-                      src={urlFor(image)?.url() || "/fallback.jpg"} // Ensure fallback for invalid URLs
-                      alt={post.title || "Image"}
-                      width={1920}
-                      height={1080}
-                      className="object-cover w-full transition-all cursor-grab "
-                    />
+                    <PostImage alt={post.title} image={urlFor(image)?.url()!} />
                   </div>
                 </CarouselItem>
               );
             })}
           </CarouselContent>
-          <CarouselPrevious className="hidden lg:block" />
-          <CarouselNext className="hidden lg:block" />
+          <CarouselPrevious className="hidden lg:flex" />
+          <CarouselNext className="hidden lg:flex" />
         </Carousel>
       )}
     </div>
