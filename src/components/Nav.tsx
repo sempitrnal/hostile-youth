@@ -5,11 +5,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { FaSearch } from "react-icons/fa";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   { name: "News", href: "/" },
+  { name: "About", href: "/about" },
   { name: "Bands", href: "/bands" },
-  { name: "Merch", href: "/merch" },
 ];
 
 const staggeredNavLinks = {
@@ -19,12 +30,19 @@ const staggeredNavLinks = {
     x: 0,
     transition: { delay: i * 0.1 },
   }),
+  exit: (i: number) => ({
+    opacity: 0,
+    x: -200,
+    transition: { delay: i * 0.05 },
+  }),
 };
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasShadow, setHasShadow] = useState(false);
-
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
@@ -48,13 +66,16 @@ const Nav = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  const searchHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSearchOpen(false);
+    // Redirect to search page with query
+    router.push(`/search?q=${searchQuery}`);
+  };
   return (
     <nav
-      className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-white text-black  dark:text-white transition-all ${
-        hasShadow
-          ? "shadow-md dark:shadow-sm dark:shadow-[rgba(229,229,229,0.17)]"
-          : ""
+      className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-white text-black  dark:text-white transition-colors ${
+        hasShadow ? "shadow-sm dark:shadow-[rgba(229,229,229,0.17)]" : ""
       } dark:bg-blue-600`}
     >
       <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto sm:p-8">
@@ -70,6 +91,34 @@ const Nav = () => {
         </Link>
 
         <div className="flex items-center gap-2 lg:gap-10">
+          <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+            <DialogTrigger
+              onClick={(e) => {
+                e.preventDefault();
+                setIsSearchOpen(true);
+              }}
+            >
+              <FaSearch className="text-xl transition-colors cursor-pointer text-stone-600 hover:stone-700 dark:text-white" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Search</DialogTitle>
+                <div className="py-5">
+                  <form action="" onSubmit={searchHandler}>
+                    <Input
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className=""
+                      placeholder=""
+                    />
+                  </form>
+                  <DialogDescription className="my-2 text-sm text-gray-500 dark:text-gray-400">
+                    Search for your favorite bands and news
+                  </DialogDescription>
+                </div>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           {/* Burger Menu Button for Small Screens */}
           <div className="translate-y-1 lg:hidden">
             <button
@@ -117,7 +166,7 @@ const Nav = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                exit={{ opacity: 0, y: -10, transition: { delay: 0.3 } }}
                 transition={{ duration: 0.3 }}
                 className="absolute top-full px-10 pt-10 pb-[100vh] left-0 w-full bg-white dark:bg-blue-600 shadow-md flex flex-col lg:hidden"
               >
@@ -128,7 +177,7 @@ const Nav = () => {
                     variants={staggeredNavLinks}
                     initial="hidden"
                     animate="visible"
-                    exit="hidden"
+                    exit="exit"
                     className="flex flex-col w-full gap-5" // Full width for mobile
                   >
                     <Link
@@ -150,7 +199,7 @@ const Nav = () => {
               <Link
                 key={link.href} // Unique key
                 href={link.href}
-                className="text-xl font-extrabold text-blue-600 uppercase transition-all duration-300 font-dela dark:text-white lg:hover:opacity-80"
+                className="text-xl font-extrabold text-blue-600 uppercase transition-colors duration-300 font-dela dark:text-white lg:hover:opacity-80"
               >
                 {link.name}
               </Link>

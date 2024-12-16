@@ -27,10 +27,10 @@ export default function PostImage({
         height={1080}
         priority
         fetchPriority="high"
-        className={`object-cover w-full h-full transition-all duration-500 ${
+        className={`object-cover w-full h-full transition-opacity duration-500 ${
           isLoading ? "opacity-0" : "opacity-100"
         }`}
-        onLoadingComplete={() => setIsLoading(false)} // Set loading to false when done
+        onLoad={() => setIsLoading(false)} // Set loading to false when done
       />
     </div>
   );

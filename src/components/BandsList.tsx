@@ -3,6 +3,7 @@
 import { Band } from "@/app/bands/page";
 import BandCard from "@/components/BandCard";
 import { useMemo, useState } from "react";
+import { Input } from "./ui/input";
 
 const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,12 +37,12 @@ const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
     <>
       {/* Search Input */}
       <div className="mb-6">
-        <input
+        <Input
           type="text"
           placeholder="Search bands..."
           value={searchQuery}
           onChange={handleSearch}
-          className="w-full p-3 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className=""
         />
       </div>
 

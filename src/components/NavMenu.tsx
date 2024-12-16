@@ -46,7 +46,7 @@ const NavMenu = ({
               <Link
                 href={link.href}
                 onClick={() => window.innerWidth < 1024 && toggleMenu()}
-                className="lg:hover:opacity-80 uppercase font-dela font-extrabold text-xl text-yellow-500 dark:text-white lg:hover:bg-transparent hover:bg-[#f5f5f5] dark:hover:bg-[#141414] dark:hover:opacity-70 border-b lg:border-none w-full align-middle transition-all duration-300 p-8 lg:p-0 drop-shadow-[0_35px_35px_rgba(0,0,0,0.795)]"
+                className="lg:hover:opacity-80 uppercase font-dela font-extrabold text-xl text-yellow-500 dark:text-white lg:hover:bg-transparent hover:bg-[#f5f5f5] dark:hover:bg-[#141414] dark:hover:opacity-70 border-b lg:border-none w-full align-middle transition-colors duration-300 p-8 lg:p-0 drop-shadow-[0_35px_35px_rgba(0,0,0,0.795)]"
               >
                 {link.name}
               </Link>

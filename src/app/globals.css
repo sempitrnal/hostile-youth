@@ -35,6 +35,10 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --scrollbar-bg: "#333333";
+    --scrollbar-thumb: hsl(0, 0%, 70%);
+    --scrollbar-thumb-hover: hsl(0, 0%, 50%);
+    --radius: 0.5rem;
   }
   .dark {
     --background: 20 14.3% 4.1%;
@@ -61,7 +65,34 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --scrollbar-bg: hsl(20, 14%, 10%);
+    --scrollbar-thumb: hsl(0, 0%, 30%);
+    --scrollbar-thumb-hover: hsl(0, 0%, 50%);
   }
+}
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2 h-2; /* Scrollbar width and height */
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-bg); /* Clean track background */
+  @apply rounded-lg;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb); /* Thumb color */
+  @apply rounded-lg;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover); /* Thumb color on hover */
+}
+
+/* Firefox Scrollbar */
+html {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: var(--scrollbar-thumb) transparent; /* Thumb and track colors */
 }
 
 @layer base {

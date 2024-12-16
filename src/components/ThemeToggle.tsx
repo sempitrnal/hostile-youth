@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { FaMoon } from "react-icons/fa";
 import { LuSun } from "react-icons/lu";
@@ -7,35 +8,46 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check for stored theme or default to system preference
+    // Check for stored theme or system preference
     const storedTheme = localStorage.getItem("theme");
     const systemPrefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
 
-    if (storedTheme) {
-      setTheme(storedTheme);
-      document.documentElement.classList.toggle("dark", storedTheme === "dark");
-    } else {
-      setTheme(systemPrefersDark ? "dark" : "light");
-      document.documentElement.classList.toggle("dark", systemPrefersDark);
-    }
+    const currentTheme = storedTheme || (systemPrefersDark ? "dark" : "light");
+    setTheme(currentTheme);
+
+    // Apply theme and color-scheme
+    document.documentElement.classList.toggle("dark", currentTheme === "dark");
+    document.documentElement.classList.toggle(
+      "light",
+      currentTheme === "light"
+    );
+    document.documentElement.style.colorScheme = currentTheme;
   }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
+
+    // Apply theme and color-scheme
+    document.documentElement.classList.toggle("light", newTheme === "light");
+
     document.documentElement.classList.toggle("dark", newTheme === "dark");
+    document.documentElement.style.colorScheme = newTheme;
+
+    // Store theme in localStorage
     localStorage.setItem("theme", newTheme);
   };
 
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-md dark:bg-stone-900 bg-stone-100 hover:opacity-80 transition-all "
+      aria-label="Toggle Theme"
+      className="p-2 transition-colors rounded-md dark:bg-stone-900 bg-stone-100 hover:opacity-80"
     >
       {theme === "light" ? (
-        <FaMoon className="text-xl text-gray-800 " />
+        <FaMoon className="text-xl text-gray-800" />
       ) : (
         <LuSun className="text-xl text-yellow-300" />
       )}

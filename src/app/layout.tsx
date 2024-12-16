@@ -27,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-[#0e0e0e] transition-all  dark:text-gray-100`}
+        style={{
+          scrollbarGutter: "stable",
+        }}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-[#0e0e0e] transition-colors  dark:text-gray-100`}
       >
         <Nav />
         {children}

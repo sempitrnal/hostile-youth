@@ -15,7 +15,7 @@ export default function PostCard({
   postImageUrl: string | null;
 }) {
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(post.image.metadata);
   return (
     <Link
       className={`flex flex-col group/link ${isLoading ? "cursor-default" : "cursor-pointer"}`}
@@ -35,10 +35,10 @@ export default function PostCard({
           height={1080}
           priority
           fetchPriority="high"
-          className={`object-cover w-full h-full transition-all duration-500 ${
+          className={`object-cover w-full h-full transition-opacity duration-500 ${
             isLoading ? "opacity-0" : "opacity-100"
           }`}
-          onLoadingComplete={() => setIsLoading(false)} // Set loading to false when done
+          onLoad={() => setIsLoading(false)} // Set loading to false when done
         />
       </div>
       {/* Text with Skeleton */}
