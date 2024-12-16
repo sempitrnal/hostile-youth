@@ -50,7 +50,7 @@ export default function PostCard({
         </div>
       ) : (
         <div>
-          <h2 className="text-xl lg:text-3xl mb-1 text-justify group-hover/link:opacity-90 transition-opacity duration-500 font-black text-[#292929] dark:text-white font-sans">
+          <h2 className="text-lg mt-2   mb-1 text-justify group-hover/link:underline group-hover:underline-offset-4 transition-opacity duration-500 font-black text-[#292929] dark:text-white uppercase">
             {post.title}
           </h2>
           <p className="text-sm text-stone-600 dark:text-stone-400">

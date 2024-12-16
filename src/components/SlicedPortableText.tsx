@@ -58,7 +58,7 @@ export const SlicedBody = ({
     },
     block: {
       normal: ({ children }) => (
-        <p className="mt-2 text-sm text-justify group-hover/link:underline text-stone-500 dark:text-gray-100">
+        <p className="mt-2 text-sm text-justify text-stone-500 dark:text-stone-500">
           {children}{" "}
         </p>
       ),

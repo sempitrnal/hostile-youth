@@ -1,11 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import ThemeToggle from "./ThemeToggle";
-import { FaSearch } from "react-icons/fa";
 import {
   Dialog,
   DialogContent,
@@ -14,8 +8,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
+import { Input } from "./ui/input";
 
 const navLinks = [
   { name: "News", href: "/" },
@@ -76,7 +76,7 @@ const Nav = () => {
     <nav
       className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-white text-black  dark:text-white transition-colors ${
         hasShadow ? "shadow-sm dark:shadow-[rgba(229,229,229,0.17)]" : ""
-      } dark:bg-blue-600`}
+      } dark:bg-[#0e0e0e]`}
     >
       <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto sm:p-8">
         {/* Logo */}
@@ -102,7 +102,9 @@ const Nav = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Search</DialogTitle>
+                <DialogTitle className="uppercase font-dela">
+                  Search
+                </DialogTitle>
                 <div className="py-5">
                   <form action="" onSubmit={searchHandler}>
                     <Input
@@ -168,7 +170,7 @@ const Nav = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10, transition: { delay: 0.3 } }}
                 transition={{ duration: 0.3 }}
-                className="absolute top-full px-10 pt-10 pb-[100vh] left-0 w-full bg-white dark:bg-blue-600 shadow-md flex flex-col lg:hidden"
+                className="absolute top-full px-10 pt-10 pb-[100vh] left-0 w-full bg-white dark:bg-[#0e0e0e] shadow-md flex flex-col lg:hidden"
               >
                 {navLinks.map((link, index) => (
                   <motion.div
