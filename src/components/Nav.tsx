@@ -13,7 +13,7 @@ const navLinks = [
 ];
 
 const staggeredNavLinks = {
-  hidden: { opacity: 0, x: -10 },
+  hidden: { opacity: 0, x: -100 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
@@ -55,7 +55,7 @@ const Nav = () => {
         hasShadow
           ? "shadow-md dark:shadow-sm dark:shadow-[rgba(229,229,229,0.17)]"
           : ""
-      } dark:bg-[#f82424]`}
+      } dark:bg-blue-600`}
     >
       <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto sm:p-8">
         {/* Logo */}
@@ -115,11 +115,11 @@ const Nav = () => {
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="absolute top-full px-10 pt-10 pb-[100vh] left-0 w-full bg-white dark:bg-[#0e0e0e] shadow-md flex flex-col lg:hidden"
+                className="absolute top-full px-10 pt-10 pb-[100vh] left-0 w-full bg-white dark:bg-blue-600 shadow-md flex flex-col lg:hidden"
               >
                 {navLinks.map((link, index) => (
                   <motion.div
@@ -134,7 +134,7 @@ const Nav = () => {
                     <Link
                       href={link.href}
                       onClick={() => toggleMenu()}
-                      className="p-4 text-xl font-extrabold text-yellow-500 uppercase font-dela dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900"
+                      className="p-4 text-xl font-extrabold text-blue-600 uppercase transition-colors duration-500 rounded-sm font-dela dark:text-white hover:bg-gray-100 dark:hover:bg-blue-700"
                     >
                       {link.name}
                     </Link>

@@ -8,7 +8,7 @@ const POSTS_QUERY = `*[
   && defined(slug.current)
 ]|order(publishedAt desc)[0...12]{_id, title,publisherName, slug, publishedAt,image,body}`;
 
-const options = { next: { revalidate: 30 } };
+const options = { next: { revalidate: 60 } };
 
 export const generateMetadata = async () => {
   return {
