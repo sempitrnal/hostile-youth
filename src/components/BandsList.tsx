@@ -2,59 +2,35 @@
 
 import { Band } from "@/app/bands/page";
 import BandCard from "@/components/BandCard";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
-const BandsList = ({ bands: initialBands }: { bands: Band[] }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  // Filter bands locally based on search query
+  const filteredBands = useMemo(() => {
+    const query = searchQuery.toLowerCase();
+    return initialBands.filter(
+      (band) =>
+        band.bandName.toLowerCase().includes(query) ||
+        band.bandDescription.toLowerCase().includes(query)
+    );
+  }, [searchQuery, initialBands]);
 
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("query") || ""
-  );
-  const [bands, setBands] = useState(initialBands);
-  const [loading, setLoading] = useState(false);
-
-  // Function to fetch bands based on search input
-  const fetchBands = async (query: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/search-bands?query=${query}`);
-      if (!res.ok) throw new Error("Failed to fetch bands");
-      const data = await res.json();
-      setBands(data);
-    } catch (err) {
-      console.error(err);
-      setBands([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Update search query and fetch data
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.replace(/[^\w\s]/gi, "").trim();
-    setSearchQuery(query);
-
-    // Update URL params
-    const newUrl = query
-      ? `/bands?query=${encodeURIComponent(query)}`
-      : `/bands`;
-
-    router.push(newUrl, { scroll: false });
-
-    fetchBands(query);
-  };
-
-  // Group bands alphabetically
+  // Group bands alphabetically for display
   const groupedBands = useMemo(() => {
-    return bands.reduce((acc: Record<string, Band[]>, band) => {
-      const firstLetter = band.bandName[0]?.toUpperCase() || "#"; // Default to '#' for empty names
+    return filteredBands.reduce((acc: Record<string, Band[]>, band) => {
+      const firstLetter = band.bandName[0]?.toUpperCase() || "#";
       if (!acc[firstLetter]) acc[firstLetter] = [];
       acc[firstLetter].push(band);
       return acc;
     }, {});
-  }, [bands]);
+  }, [filteredBands]);
+
+  // Handle search input
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value.replace(/[^\w\s]/gi, "").trim();
+    setSearchQuery(query);
+  };
 
   return (
     <>
@@ -69,28 +45,35 @@ const BandsList = ({ bands: initialBands }: { bands: Band[] }) => {
         />
       </div>
 
-      {/* Loading State */}
-      {loading && <p className="text-gray-500">Loading...</p>}
-
-      {/* Alphabetical Bands List */}
-      {!loading && Object.keys(groupedBands).length > 0 ? (
-        <div>
-          {Object.keys(groupedBands)
-            .sort() // Sort alphabetically
-            .map((letter) => (
-              <div key={letter} className="mb-6">
-                <h2 className="mb-4 text-2xl font-dela">{letter}</h2>
-                <div className="flex flex-col gap-5">
-                  {groupedBands[letter].map((band) => (
-                    <BandCard key={band._id} band={band} />
-                  ))}
-                </div>
-              </div>
+      {/* Conditional Rendering: Grouped or Flat List */}
+      {filteredBands.length > 0 ? (
+        searchQuery ? (
+          // Flat list when search query is active
+          <div className="flex flex-col gap-5">
+            {filteredBands.map((band) => (
+              <BandCard key={band._id} band={band} />
             ))}
-        </div>
-      ) : !loading && bands.length === 0 ? (
+          </div>
+        ) : (
+          // Grouped list when no search query
+          <div>
+            {Object.keys(groupedBands)
+              .sort()
+              .map((letter) => (
+                <div key={letter} className="mb-6">
+                  <h2 className="mb-4 text-2xl font-dela">{letter}</h2>
+                  <div className="flex flex-col gap-5">
+                    {groupedBands[letter].map((band) => (
+                      <BandCard key={band._id} band={band} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+          </div>
+        )
+      ) : (
         <p className="text-lg text-gray-500">No bands found.</p>
-      ) : null}
+      )}
     </>
   );
 };

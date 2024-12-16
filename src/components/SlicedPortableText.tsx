@@ -1,13 +1,36 @@
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import Link from "next/link";
 
+// Helper function to truncate text
+const truncateText = (text: string, maxLength: number) => {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+};
+
 export const SlicedBody = ({
   body,
   length = 5,
+  charLimit = 200,
 }: {
   body: any;
   length?: number;
+  charLimit?: number; // Maximum number of characters
 }) => {
+  // Truncate block content with character limit
+  const truncatedBody = body.slice(0, length).map((block: any) => {
+    if (block._type === "block" && block.children) {
+      // Truncate each child text node
+      return {
+        ...block,
+        children: block.children.map((child: any) => ({
+          ...child,
+          text: truncateText(child.text, charLimit),
+        })),
+      };
+    }
+    return block;
+  });
+
   const components: Partial<PortableTextReactComponents> = {
     types: {
       code: ({ value }: { value: any }) => (
@@ -20,7 +43,7 @@ export const SlicedBody = ({
           <iframe
             src={value.url}
             title={value.title || "Embedded Iframe"}
-            className="absolute top-0 left-0 w-full h-full border-none "
+            className="absolute top-0 left-0 w-full h-full border-none"
             allowFullScreen
           />
         </div>
@@ -34,45 +57,15 @@ export const SlicedBody = ({
       image: () => null,
     },
     block: {
-      h1: ({ children }) => (
-        <h1 className="my-4 text-4xl font-bold text-gray-900 dark:text-white">
-          {children}
-        </h1>
-      ),
-      h2: ({ children }) => (
-        <h2 className="my-4 text-3xl font-semibold text-gray-800 dark:text-white">
-          {children}
-        </h2>
-      ),
-      h3: ({ children }) => (
-        <h3 className="my-4 text-2xl font-semibold text-gray-700 dark:text-white">
-          {children}
-        </h3>
-      ),
-      h4: ({ children }) => (
-        <h4 className="my-4 text-xl font-semibold text-gray-700 dark:text-white">
-          {children}
-        </h4>
-      ),
-      h5: ({ children }) => (
-        <h5 className="my-4 text-lg font-semibold text-gray-600 dark:text-white">
-          {children}
-        </h5>
-      ),
-      h6: ({ children }) => (
-        <h6 className="my-4 text-lg font-medium text-gray-500 dark:text-white">
-          {children}
-        </h6>
+      normal: ({ children }) => (
+        <p className="mt-2 text-sm text-justify group-hover/link:underline text-stone-500 dark:text-gray-100">
+          {children}{" "}
+        </p>
       ),
       blockquote: ({ children }) => (
         <blockquote className="pl-4 italic text-gray-600 border-l-4 border-gray-400">
           {children}
         </blockquote>
-      ),
-      normal: ({ children }) => (
-        <p className="text-sm text-justify text-stone-500 dark:text-gray-100">
-          {children}
-        </p>
       ),
     },
     marks: {
@@ -94,5 +87,5 @@ export const SlicedBody = ({
     },
   };
 
-  return <PortableText value={body.slice(0, length)} components={components} />;
+  return <PortableText value={truncatedBody} components={components} />;
 };

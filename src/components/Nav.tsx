@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { name: "News", href: "/news" },
+  { name: "News", href: "/" },
   { name: "Bands", href: "/bands" },
   { name: "Merch", href: "/merch" },
 ];
@@ -51,11 +51,11 @@ const Nav = () => {
 
   return (
     <nav
-      className={`sticky top-0 left-0 w-full flex h-20 bg-white text-black dark:bg-[#0e0e0e] dark:text-white transition-all ${
+      className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-white text-black  dark:text-white transition-all ${
         hasShadow
           ? "shadow-md dark:shadow-sm dark:shadow-[rgba(229,229,229,0.17)]"
           : ""
-      }`}
+      } dark:bg-[#f82424]`}
     >
       <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto sm:p-8">
         {/* Logo */}

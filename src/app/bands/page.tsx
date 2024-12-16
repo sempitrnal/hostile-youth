@@ -19,6 +19,7 @@ const Bands = async ({
   const BANDS_QUERY = `*[
     _type == "band"
     && defined(slug.current)
+    && active == true
     ${
       searchQuery
         ? `&& (bandName match "*${searchQuery}*" || bandDescription match "*${searchQuery}*")`
@@ -33,7 +34,7 @@ const Bands = async ({
   return (
     <main className="container max-w-4xl min-h-screen p-8 mx-auto">
       <h1 className="mb-10 text-5xl uppercase font-dela ">Bands</h1>
-      <BandsList bands={bands} />
+      <BandsList initialBands={bands} />
     </main>
   );
 };
