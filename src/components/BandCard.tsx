@@ -23,8 +23,10 @@ const BandCard = ({ band }: BandCardProps) => {
         className="rounded-full object-cover w-20 h-20"
       />
       <div className="flex flex-col ">
-        <h3 className="text-lg font-semibold mt-2">{band.bandName}</h3>
-        <p className="text-gray-500 dark:text-gray-400">
+        <h3 className="text-lg font-semibold font-sans mt-2">
+          {band.bandName}
+        </h3>
+        <p className="text-stone-700 dark:text-stone-300">
           {band.bandDescription}
         </p>
       </div>

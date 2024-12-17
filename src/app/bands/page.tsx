@@ -40,12 +40,12 @@ const Bands = async ({
   const bands = await client.fetch<Band[]>(BANDS_QUERY, {}, options);
 
   return (
-    <main className="container max-w-4xl min-h-screen p-4 mx-auto lg:p-8">
+    <main className="">
       <Breadcrumb className="mb-10">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="uppercase transition-colors font-dela hover:text-foreground"
+              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
               href="/"
             >
               Home
@@ -53,13 +53,15 @@ const Bands = async ({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className="uppercase font-dela">
+            <BreadcrumbPage className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground">
               Bands
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h1 className="mb-10 text-5xl uppercase font-dela ">Bands</h1>
+      <h1 className="lowercase text-5xl mb-5 transition-colors font-semibold font-sans hover:text-foreground ">
+        Bands
+      </h1>
       <BandsList initialBands={bands} />
     </main>
   );

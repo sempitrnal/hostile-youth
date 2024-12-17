@@ -1,4 +1,6 @@
+"use client";
 import { urlFor } from "@/sanity/client";
+import { motion } from "framer-motion";
 import { SanityDocument } from "next-sanity";
 import PostImage from "./PostImage";
 import {
@@ -33,6 +35,21 @@ const PostPagePhotosCarousel = ({ post }: { post: SanityDocument }) => {
           <CarouselNext className="hidden lg:flex" />
         </Carousel>
       )}
+      <motion.div
+        initial={{
+          opacity: 0,
+          x: -50,
+        }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{
+          duration: 0.3,
+          delay: 1.5,
+        }}
+        className="lg:hidden flex justify-center items-center mt-5 text-sm text-gray-500 dark:text-gray-400"
+      >
+        swipe to view more
+      </motion.div>
     </div>
   );
 };

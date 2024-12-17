@@ -47,7 +47,7 @@ export default function ThemeToggle() {
       className="p-2 transition-colors rounded-md dark:bg-stone-900 bg-stone-100 hover:opacity-80"
     >
       {theme === "light" ? (
-        <FaMoon className="text-xl text-gray-800" />
+        <FaMoon className="text-xl text-stone-900" />
       ) : (
         <LuSun className="text-xl text-yellow-300" />
       )}

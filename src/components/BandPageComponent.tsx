@@ -110,8 +110,8 @@ const BandPageComponent = ({ band }: { band: Band }) => {
 
   return (
     <>
-      <div className="my-10">
-        <h1 className="text-5xl font-medium transition-colors font-dela lg:text-7xl text-stone-800 dark:text-white">
+      <div className="mt-10">
+        <h1 className="text-5xl font-medium transition-colors font-sans lg:text-7xl text-stone-800 dark:text-white">
           {band.bandName}
         </h1>
         <p className="text-stone-500 dark:text-stone-200">

@@ -1,5 +1,13 @@
 "use client";
 
+import PostCard from "@/components/PostCard";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { urlFor } from "@/sanity/client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -88,14 +96,36 @@ function SearchContent() {
 
   return (
     <main className="container max-w-4xl min-h-screen p-4 mx-auto overflow-x-hidden lg:p-8">
-      <h1 className="mb-10 text-xl uppercase font-dela">
+      <Breadcrumb className="mb-10">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <Link
+              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
+              href="/"
+            >
+              Home
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground">
+              search
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <h1 className="mb-10 text-xl lowercase font-bold font-sans">
         Search Results for "{query}"
       </h1>
 
-      {loading && <p className="uppercase font-dela">Loading...</p>}
+      {loading && (
+        <p className="text-xl lowercase font-bold font-sans">huwat sa...</p>
+      )}
 
       {!loading && !results.news.length && !results.bands.length && (
-        <p className="uppercase font-dela">No results found.</p>
+        <p className="text-xl lowercase font-bold font-sans">
+          No results found.
+        </p>
       )}
 
       <AnimatePresence>
@@ -111,34 +141,18 @@ function SearchContent() {
             <motion.section variants={itemVariants}>
               <motion.h2
                 variants={itemVariants}
-                className="mb-5 text-5xl uppercase font-dela"
+                className="text-5xl mb-5 lowercase font-semibold font-sans"
               >
                 News
               </motion.h2>
               <motion.div variants={containerVariants} className="grid gap-6">
                 {results.news.map((post) => (
-                  <motion.div key={post._id} variants={itemVariants}>
-                    <Link
-                      href={`/${post.slug.current}`}
-                      className="flex items-center gap-4 hover:underline"
-                    >
-                      {post.image && (
-                        <Image
-                          src={urlFor(post.image)?.url()!}
-                          alt={post.title}
-                          width={300}
-                          height={300}
-                          className="object-cover w-32 h-20 rounded aspect-video"
-                        />
-                      )}
-                      <div>
-                        <h3 className="text-lg font-medium">{post.title}</h3>
-                        <p className="text-sm text-gray-600">
-                          {post.description}
-                        </p>
-                      </div>
-                    </Link>
-                  </motion.div>
+                  <PostCard
+                    searchPage
+                    key={post._id}
+                    post={post}
+                    postImageUrl={urlFor(post.image)?.url()!}
+                  />
                 ))}
               </motion.div>
             </motion.section>
@@ -149,7 +163,7 @@ function SearchContent() {
             <motion.section variants={itemVariants}>
               <motion.h2
                 variants={itemVariants}
-                className="mb-5 text-5xl uppercase font-dela"
+                className="text-5xl mb-5 lowercase font-semibold font-sans"
               >
                 Bands
               </motion.h2>

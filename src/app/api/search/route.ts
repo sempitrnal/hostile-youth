@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         title match "*${query}*" ||
         description match "*${query}*" ||
         tags[] match "*${query}*"
-      )]{ _id, title, slug, publishedAt, image, description },
+      )]{ _id, title, slug, publisherName,publishedAt, image, description },
 
       "bands": *[_type == "band" && (
         bandName match "*${query}*" ||

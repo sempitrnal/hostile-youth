@@ -62,7 +62,9 @@ const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
               .sort()
               .map((letter) => (
                 <div key={letter} className="mb-6">
-                  <h2 className="mb-4 text-2xl font-dela">{letter}</h2>
+                  <h2 className="mb-4 text-4xl font-sans lowercase font-bold">
+                    {letter}
+                  </h2>
                   <div className="flex flex-col gap-5">
                     {groupedBands[letter].map((band) => (
                       <BandCard key={band._id} band={band} />

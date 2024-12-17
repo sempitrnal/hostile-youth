@@ -66,7 +66,7 @@ const BandPage = async ({ params }: BandPageProps) => {
   };
 
   return (
-    <main className="container max-w-4xl min-h-screen p-4 mx-auto lg:p-8 ">
+    <main className="">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -75,7 +75,7 @@ const BandPage = async ({ params }: BandPageProps) => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="uppercase transition-colors font-dela hover:text-foreground"
+              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
               href="/"
             >
               Home
@@ -84,7 +84,7 @@ const BandPage = async ({ params }: BandPageProps) => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <Link
-              className="uppercase transition-colors font-dela hover:text-foreground"
+              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
               href="/bands"
             >
               Bands
@@ -92,7 +92,7 @@ const BandPage = async ({ params }: BandPageProps) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className="uppercase font-dela">
+            <BreadcrumbPage className=" text-xl text-stone-800 dark:text-white transition-colors font-black font-sans hover:text-foreground">
               {band.bandName}
             </BreadcrumbPage>
           </BreadcrumbItem>

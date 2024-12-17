@@ -74,11 +74,11 @@ const Nav = () => {
   };
   return (
     <nav
-      className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-white text-black  dark:text-white transition-colors ${
+      className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-[#fffef4] text-black  dark:text-white transition-colors ${
         hasShadow ? "shadow-sm dark:shadow-[rgba(229,229,229,0.17)]" : ""
       } dark:bg-[#0e0e0e]`}
     >
-      <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto sm:p-8">
+      <div className="container flex items-center justify-between max-w-4xl p-2 mx-auto ">
         {/* Logo */}
         <Link className="cursor-pointer hover:opacity-90" href="/">
           <Image
@@ -98,11 +98,11 @@ const Nav = () => {
                 setIsSearchOpen(true);
               }}
             >
-              <FaSearch className="text-xl transition-colors cursor-pointer text-stone-600 hover:stone-700 dark:text-white" />
+              <FaSearch className="text-xl transition-colors cursor-pointer text-stone-900 hover:stone-700 dark:text-white" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className="uppercase font-dela">
+                <DialogTitle className="lowercase font-bold">
                   Search
                 </DialogTitle>
                 <div className="py-5">
@@ -114,7 +114,7 @@ const Nav = () => {
                       placeholder=""
                     />
                   </form>
-                  <DialogDescription className="my-2 text-sm text-gray-500 dark:text-gray-400">
+                  <DialogDescription className="my-2 text-sm text-stone-500 dark:text-stone-200 lowercase">
                     Search for your favorite bands and news
                   </DialogDescription>
                 </div>
@@ -185,7 +185,7 @@ const Nav = () => {
                     <Link
                       href={link.href}
                       onClick={() => toggleMenu()}
-                      className="p-4 text-xl font-extrabold text-blue-600 uppercase transition-colors duration-500 rounded-sm font-dela dark:text-white hover:bg-gray-100 dark:hover:bg-blue-700"
+                      className="p-4 text-xl font-semibold text-[#0c5dff] lowercase transition-colors duration-500 rounded-sm  dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]"
                     >
                       {link.name}
                     </Link>
@@ -201,7 +201,7 @@ const Nav = () => {
               <Link
                 key={link.href} // Unique key
                 href={link.href}
-                className="text-xl font-extrabold text-blue-600 uppercase transition-colors duration-300 font-dela dark:text-white lg:hover:opacity-80"
+                className="text-xl font-semibold font-sans text-stone-900 lowercase transition-colors duration-300 dark:text-white lg:hover:opacity-80"
               >
                 {link.name}
               </Link>

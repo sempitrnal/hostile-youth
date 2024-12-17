@@ -50,22 +50,16 @@ export default async function IndexPage() {
   const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
 
   return (
-    <main className="container max-w-4xl min-h-screen p-4 mx-auto sm:p-8">
-      <h1 className="mb-10 text-5xl font-dela">NEWS</h1>
-      <ul className="flex flex-col gap-y-20">
+    <main className=" ">
+      <div className="flex flex-col gap-16">
         {posts.map((post) => (
-          <li className="" key={post._id}>
-            <PostCard
-              post={post}
-              postImageUrl={
-                post.image
-                  ? urlFor(post.image)?.width(1920).height(1080).url()!
-                  : null
-              }
-            />
-          </li>
+          <PostCard
+            key={post._id}
+            post={post}
+            postImageUrl={post.image ? urlFor(post.image)?.url()! : null}
+          />
         ))}
-      </ul>
+      </div>
     </main>
   );
 }

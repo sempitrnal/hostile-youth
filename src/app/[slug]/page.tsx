@@ -193,12 +193,12 @@ export default async function PostPage({ params }: PostPageProps) {
     },
   };
   return (
-    <main className="container flex flex-col max-w-4xl min-h-screen gap-4 p-4 mx-auto lg:p-8">
-      <Breadcrumb>
+    <main className="">
+      <Breadcrumb className="mb-10">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="uppercase transition-colors font-dela hover:text-foreground"
+              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
               href="/"
             >
               Home
@@ -207,7 +207,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <BreadcrumbSeparator />
 
           <BreadcrumbItem>
-            <BreadcrumbPage className="uppercase font-dela">
+            <BreadcrumbPage className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground">
               {post.title}
             </BreadcrumbPage>
           </BreadcrumbItem>
@@ -216,14 +216,14 @@ export default async function PostPage({ params }: PostPageProps) {
 
       <h1 className="mb-2 text-4xl font-bold">{post.title}</h1>
       <div className="prose">
-        <p className="text-stone-500 dark:text-stone-400">
+        <p className="text-stone-500 dark:text-stone-200">
           by {post.publisherName}
         </p>
-        <p className="text-sm text-stone-400 dark:text-stone-600">
+        <p className="text-sm text-stone-400 dark:text-stone-400">
           {formatDate(new Date(post.publishedAt), "MMMM DD, YYYY")}
         </p>
         {Array.isArray(post.images) && (
-          <h2 className="mt-8 mb-5 text-2xl uppercase font-dela">Photos</h2>
+          <h2 className="mt-8 mb-5 text-2xl font-sans font-bold">photos</h2>
         )}
         <PostPagePhotosCarousel post={post} />
         {Array.isArray(post.body) && (

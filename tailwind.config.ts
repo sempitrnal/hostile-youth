@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         dela: ["Dela Gothic One", "sans-serif"],
         oswald: ["Oswald", "sans-serif"],
+        bebas: ["Bebas Neue", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
