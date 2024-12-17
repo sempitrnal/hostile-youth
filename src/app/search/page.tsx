@@ -24,13 +24,6 @@ interface NewsResult {
   image?: any;
 }
 
-interface BandResult {
-  _id: string;
-  bandName: string;
-  slug: { current: string };
-  bandDescription: string;
-  image?: any;
-}
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -96,7 +89,7 @@ function SearchContent() {
   }, [query]);
 
   return (
-    <main className="container mx-auto min-h-screen max-w-4xl overflow-x-hidden p-4 lg:p-8">
+    <main className="">
       <Breadcrumb className="mb-10">
         <BreadcrumbList>
           <BreadcrumbItem>
