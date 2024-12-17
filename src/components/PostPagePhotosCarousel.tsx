@@ -44,7 +44,6 @@ const PostPagePhotosCarousel = ({ post }: { post: SanityDocument }) => {
         viewport={{ once: true, amount: 0.5 }}
         transition={{
           duration: 0.3,
-          delay: 1.5,
         }}
         className="mt-5 flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 lg:hidden"
       >
