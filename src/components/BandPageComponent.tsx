@@ -1,24 +1,24 @@
-import { Band } from "@/app/bands/page";
-import { urlFor } from "@/sanity/client";
-import { PortableText, PortableTextReactComponents } from "next-sanity";
-import Image from "next/image";
-import Link from "next/link";
-import { FaBandcamp, FaFacebook, FaInstagram, FaSpotify } from "react-icons/fa";
+import { Band } from '@/app/bands/page';
+import { urlFor } from '@/sanity/client';
+import { PortableText, PortableTextReactComponents } from 'next-sanity';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FaBandcamp, FaFacebook, FaInstagram, FaSpotify } from 'react-icons/fa';
 
 const BandPageComponent = ({ band }: { band: Band }) => {
   const components: Partial<PortableTextReactComponents> = {
     types: {
       code: ({ value }: { value: any }) => (
-        <pre className="p-4 overflow-x-auto text-white bg-gray-900 rounded-lg">
+        <pre className="overflow-x-auto rounded-lg bg-gray-900 p-4 text-white">
           <code className="font-mono text-sm">{value.code}</code>
         </pre>
       ),
       iframe: ({ value }: { value: any }) => (
-        <div className="relative pt-[56.25%] overflow-hidden ">
+        <div className="relative overflow-hidden pt-[56.25%]">
           <iframe
             src={value.url}
-            title={value.title || "Embedded Iframe"}
-            className="absolute top-0 left-0 w-full h-full border-none "
+            title={value.title || 'Embedded Iframe'}
+            className="absolute left-0 top-0 h-full w-full border-none"
             allowFullScreen
           />
         </div>
@@ -26,7 +26,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
       html: ({ value }: { value: any }) => (
         <div
           dangerouslySetInnerHTML={{ __html: value.html }}
-          className="max-w-full my-2 prose"
+          className="prose my-2 max-w-full"
         />
       ),
       image: ({ value }) => (
@@ -34,10 +34,10 @@ const BandPageComponent = ({ band }: { band: Band }) => {
           {value?.asset && (
             <Image
               src={urlFor(value.asset._ref)?.url()!}
-              alt={value.alt || "Sanity Image"}
+              alt={value.alt || 'Sanity Image'}
               width={800}
               height={450}
-              className="w-full mx-auto my-2 rounded-lg"
+              className="mx-auto my-2 w-full rounded-lg"
             />
           )}
         </div>
@@ -75,27 +75,27 @@ const BandPageComponent = ({ band }: { band: Band }) => {
         </h6>
       ),
       blockquote: ({ children }) => (
-        <blockquote className="pl-4 my-4 italic text-gray-600 border-l-4 border-gray-400">
+        <blockquote className="my-4 border-l-4 border-gray-400 pl-4 italic text-gray-600">
           {children}
         </blockquote>
       ),
       normal: ({ children }) => (
-        <p className="my-2 font-sans text-lg text-justify text-gray-500 dark:text-gray-200">
+        <p className="my-2 text-justify font-sans text-lg text-gray-500 dark:text-gray-200">
           {children}
         </p>
       ),
     },
     marks: {
       link: ({ children, value }) => {
-        const target = (value?.href || "").startsWith("http")
-          ? "_blank"
+        const target = (value?.href || '').startsWith('http')
+          ? '_blank'
           : undefined;
         return (
           <Link
             href={value?.href}
             target={target}
-            rel={target === "_blank" ? "noopener noreferrer" : undefined}
-            className="underline text-stone-900 hover:text-stone-800 dark:text-white dark:hover:text-white/80"
+            rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+            className="text-stone-900 underline hover:text-stone-800 dark:text-white dark:hover:text-white/80"
           >
             {children}
           </Link>
@@ -111,19 +111,19 @@ const BandPageComponent = ({ band }: { band: Band }) => {
   return (
     <>
       <div className="mt-10">
-        <h1 className="text-5xl font-medium transition-colors font-sans lg:text-7xl text-stone-800 dark:text-white">
+        <h1 className="font-sans text-5xl font-medium text-stone-800 transition-colors dark:text-white lg:text-7xl">
           {band.bandName}
         </h1>
         <p className="text-stone-500 dark:text-stone-200">
           {band.bandDescription}
         </p>
       </div>
-      <div className="flex items-center gap-2 my-5">
+      <div className="my-5 flex items-center gap-2">
         {socialLinks && socialLinks.instagram && (
           <Link
             target="_blank"
             href={socialLinks.instagram}
-            className="hover:underline "
+            className="hover:underline"
           >
             <FaInstagram className="text-3xl" />
           </Link>
@@ -134,7 +134,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
             href={socialLinks.bandcamp}
             className="hover:underline"
           >
-            <FaBandcamp className="text-3xl " />
+            <FaBandcamp className="text-3xl" />
           </Link>
         )}
         {socialLinks && socialLinks.spotify && (
@@ -143,7 +143,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
             href={socialLinks.spotify}
             className="hover:underline"
           >
-            <FaSpotify className="text-3xl " />
+            <FaSpotify className="text-3xl" />
           </Link>
         )}
         {socialLinks && socialLinks.facebook && (
@@ -152,7 +152,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
             href={socialLinks.facebook}
             className="hover:underline"
           >
-            <FaFacebook className="text-3xl " />
+            <FaFacebook className="text-3xl" />
           </Link>
         )}
       </div>
@@ -161,7 +161,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
         alt={band.bandName}
         width={1920}
         height={1080}
-        className="object-cover w-full h-full rounded-md "
+        className="h-full w-full rounded-md object-cover"
       />
       {Array.isArray(band.body) && (
         <PortableText value={band.body} components={components} />

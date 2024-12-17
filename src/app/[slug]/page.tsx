@@ -1,21 +1,21 @@
-import PostPagePhotosCarousel from "@/components/PostPagePhotosCarousel";
+import PostPagePhotosCarousel from '@/components/PostPagePhotosCarousel';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 
-import { client, urlFor } from "@/sanity/client";
-import { formatDate } from "@/utils/dateFormatter";
+import { client, urlFor } from '@/sanity/client';
+import { formatDate } from '@/utils/dateFormatter';
 import {
   PortableText,
   PortableTextReactComponents,
   type SanityDocument,
-} from "next-sanity";
-import Image from "next/image";
-import Link from "next/link";
+} from 'next-sanity';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
 
@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: PostPageProps) {
 
   if (!post) {
     return {
-      title: "Post Not Found",
-      description: "The requested post does not exist.",
+      title: 'Post Not Found',
+      description: 'The requested post does not exist.',
     };
   }
 
@@ -57,12 +57,12 @@ export async function generateMetadata({ params }: PostPageProps) {
             height: 630,
           }))
         : [],
-      type: "article",
+      type: 'article',
       publishedTime: post.publishedAt,
-      siteName: "Hostile Youth Records",
+      siteName: 'Hostile Youth Records',
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title: `${post.title} | Hostile Youth Records`,
       description: post.body
         ? post.body[0]?.children[0]?.text?.slice(0, 150) || post.title
@@ -81,7 +81,7 @@ async function getPostData(slug: string): Promise<SanityDocument | null> {
 }
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostData((await params).slug);
-  console.log("🚀 ~ PostPage ~ post:", post);
+  console.log('🚀 ~ PostPage ~ post:', post);
   if (!post) {
     return <div>Post not found</div>;
   }
@@ -89,16 +89,16 @@ export default async function PostPage({ params }: PostPageProps) {
   const components: Partial<PortableTextReactComponents> = {
     types: {
       code: ({ value }: { value: any }) => (
-        <pre className="p-4 overflow-x-auto text-white bg-gray-900 rounded-lg">
+        <pre className="overflow-x-auto rounded-lg bg-gray-900 p-4 text-white">
           <code className="font-mono text-sm">{value.code}</code>
         </pre>
       ),
       iframe: ({ value }: { value: any }) => (
-        <div className="relative pt-[56.25%] overflow-hidden ">
+        <div className="relative overflow-hidden pt-[56.25%]">
           <iframe
             src={value.url}
-            title={value.title || "Embedded Iframe"}
-            className="absolute top-0 left-0 w-full h-full border-none "
+            title={value.title || 'Embedded Iframe'}
+            className="absolute left-0 top-0 h-full w-full border-none"
             allowFullScreen
           />
         </div>
@@ -106,7 +106,7 @@ export default async function PostPage({ params }: PostPageProps) {
       html: ({ value }: { value: any }) => (
         <div
           dangerouslySetInnerHTML={{ __html: value.html }}
-          className="max-w-full my-5 prose"
+          className="prose my-5 max-w-full"
         />
       ),
       image: ({ value }) => (
@@ -114,10 +114,10 @@ export default async function PostPage({ params }: PostPageProps) {
           {value?.asset && (
             <Image
               src={urlFor(value.asset._ref)?.url()!}
-              alt={value.alt || "Sanity Image"}
+              alt={value.alt || 'Sanity Image'}
               width={800}
               height={450}
-              className="w-full mx-auto my-2 rounded-lg"
+              className="mx-auto my-2 w-full rounded-lg"
             />
           )}
         </div>
@@ -127,7 +127,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <video
             src={value}
             controls
-            className="w-full mx-auto my-2 rounded-lg"
+            className="mx-auto my-2 w-full rounded-lg"
           ></video>
         </div>
       ),
@@ -164,26 +164,26 @@ export default async function PostPage({ params }: PostPageProps) {
         </h6>
       ),
       blockquote: ({ children }) => (
-        <blockquote className="pl-4 my-4 italic text-gray-600 border-l-4 border-gray-400">
+        <blockquote className="my-4 border-l-4 border-gray-400 pl-4 italic text-gray-600">
           {children}
         </blockquote>
       ),
       normal: ({ children }) => (
-        <p className="my-2 text-lg text-justify text-gray-600 dark:text-gray-200">
+        <p className="my-2 text-justify text-lg text-gray-600 dark:text-gray-200">
           {children}
         </p>
       ),
     },
     marks: {
       link: ({ children, value }) => {
-        const target = (value?.href || "").startsWith("http")
-          ? "_blank"
+        const target = (value?.href || '').startsWith('http')
+          ? '_blank'
           : undefined;
         return (
           <Link
             href={value?.href}
             target={target}
-            rel={target === "_blank" ? "noopener noreferrer" : undefined}
+            rel={target === '_blank' ? 'noopener noreferrer' : undefined}
             className="text-white underline hover:text-white/80"
           >
             {children}
@@ -198,7 +198,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
+              className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground"
               href="/"
             >
               Home
@@ -207,7 +207,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <BreadcrumbSeparator />
 
           <BreadcrumbItem>
-            <BreadcrumbPage className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground">
+            <BreadcrumbPage className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground">
               {post.title}
             </BreadcrumbPage>
           </BreadcrumbItem>
@@ -220,10 +220,10 @@ export default async function PostPage({ params }: PostPageProps) {
           by {post.publisherName}
         </p>
         <p className="text-sm text-stone-400 dark:text-stone-400">
-          {formatDate(new Date(post.publishedAt), "MMMM DD, YYYY")}
+          {formatDate(new Date(post.publishedAt), 'MMMM DD, YYYY')}
         </p>
         {Array.isArray(post.images) && (
-          <h2 className="mt-8 mb-5 text-2xl font-sans font-bold">photos</h2>
+          <h2 className="mb-5 mt-8 font-sans text-2xl font-bold">photos</h2>
         )}
         <PostPagePhotosCarousel post={post} />
         {Array.isArray(post.body) && (

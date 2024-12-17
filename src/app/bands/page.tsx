@@ -1,14 +1,14 @@
-import BandsList from "@/components/BandsList";
+import BandsList from '@/components/BandsList';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { client } from "@/sanity/client";
-import { SanityDocument } from "next-sanity";
-import Link from "next/link";
+} from '@/components/ui/breadcrumb';
+import { client } from '@/sanity/client';
+import { SanityDocument } from 'next-sanity';
+import Link from 'next/link';
 
 export interface Band extends SanityDocument {
   bandName: string;
@@ -22,7 +22,7 @@ const Bands = async ({
 }: {
   searchParams: Promise<{ query?: string }>;
 }) => {
-  const searchQuery = (await searchParams).query || ""; // Get the search query from URL
+  const searchQuery = (await searchParams).query || ''; // Get the search query from URL
 
   const BANDS_QUERY = `*[
     _type == "band"
@@ -31,7 +31,7 @@ const Bands = async ({
     ${
       searchQuery
         ? `&& (bandName match "*${searchQuery}*" || bandDescription match "*${searchQuery}*")`
-        : ""
+        : ''
     }
   ]|order(publishedAt desc)[0...12]{
     _id, bandName, slug, bandDescription, publishedAt, image, body
@@ -45,7 +45,7 @@ const Bands = async ({
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
+              className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground"
               href="/"
             >
               Home
@@ -53,13 +53,13 @@ const Bands = async ({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground">
+            <BreadcrumbPage className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground">
               Bands
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h1 className="lowercase text-5xl mb-5 transition-colors font-semibold font-sans hover:text-foreground ">
+      <h1 className="mb-5 font-sans text-5xl font-semibold lowercase transition-colors hover:text-foreground">
         Bands
       </h1>
       <BandsList initialBands={bands} />

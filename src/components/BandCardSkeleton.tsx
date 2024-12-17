@@ -1,13 +1,13 @@
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from './ui/skeleton';
 
 const BandCardSkeleton = () => {
   return (
-    <div className="flex items-center w-full gap-3">
-      <Skeleton className="w-20 h-20 rounded-full aspect-square "></Skeleton>
-      <div className="flex flex-col w-full gap-2">
-        <Skeleton className="w-[10rem] h-5"></Skeleton>
-        <Skeleton className="w-full lg:w-[50%] h-3"></Skeleton>
-        <Skeleton className="w-full lg:w-[50%] h-3"></Skeleton>
+    <div className="flex w-full items-center gap-3">
+      <Skeleton className="aspect-square h-20 w-20 rounded-full"></Skeleton>
+      <div className="flex w-full flex-col gap-2">
+        <Skeleton className="h-5 w-[10rem]"></Skeleton>
+        <Skeleton className="h-3 w-full lg:w-[50%]"></Skeleton>
+        <Skeleton className="h-3 w-full lg:w-[50%]"></Skeleton>
       </div>
     </div>
   );

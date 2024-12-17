@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dialog,
@@ -7,20 +7,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import ThemeToggle from "./ThemeToggle";
-import { Input } from "./ui/input";
+} from '@/components/ui/dialog';
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import ThemeToggle from './ThemeToggle';
+import { Input } from './ui/input';
 
 const navLinks = [
-  { name: "News", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Bands", href: "/bands" },
+  { name: 'News', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Bands', href: '/bands' },
 ];
 
 const staggeredNavLinks = {
@@ -41,7 +41,7 @@ const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasShadow, setHasShadow] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -54,8 +54,8 @@ const Nav = () => {
         setIsMenuOpen(false);
       }
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Add shadow on scroll
@@ -63,8 +63,8 @@ const Nav = () => {
     const handleScroll = () => {
       setHasShadow(window.scrollY > 10);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   const searchHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,11 +75,11 @@ const Nav = () => {
   };
   return (
     <nav
-      className={`sticky top-0 left-0 z-40 w-full flex h-20 bg-[#fffef4] text-black  dark:text-white transition-colors ${
-        hasShadow ? "shadow-sm dark:shadow-[rgba(229,229,229,0.17)]" : ""
+      className={`sticky left-0 top-0 z-40 flex h-20 w-full bg-[#fffef4] text-black transition-colors dark:text-white ${
+        hasShadow ? 'shadow-sm dark:shadow-[rgba(229,229,229,0.17)]' : ''
       } dark:bg-[#0e0e0e]`}
     >
-      <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto ">
+      <div className="container mx-auto flex max-w-4xl items-center justify-between p-4">
         {/* Logo */}
         <Link className="cursor-pointer hover:opacity-90" href="/">
           <Image
@@ -99,11 +99,11 @@ const Nav = () => {
                 setIsSearchOpen(true);
               }}
             >
-              <FaSearch className="text-xl transition-colors cursor-pointer text-stone-900 hover:stone-700 dark:text-white" />
+              <FaSearch className="hover:stone-700 cursor-pointer text-xl text-stone-900 transition-colors dark:text-white" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className="lowercase font-bold">
+                <DialogTitle className="font-bold lowercase">
                   Search
                 </DialogTitle>
                 <div className="py-5">
@@ -115,7 +115,7 @@ const Nav = () => {
                       placeholder=""
                     />
                   </form>
-                  <DialogDescription className="my-2 text-sm text-stone-500 dark:text-stone-200 lowercase">
+                  <DialogDescription className="my-2 text-sm lowercase text-stone-500 dark:text-stone-200">
                     Search for your favorite bands and news
                   </DialogDescription>
                 </div>
@@ -127,7 +127,7 @@ const Nav = () => {
             <button
               onClick={toggleMenu}
               aria-label="Toggle Menu"
-              className="text-black dark:text-white focus:outline-none"
+              className="text-black focus:outline-none dark:text-white"
             >
               {isMenuOpen ? (
                 <svg
@@ -136,7 +136,7 @@ const Nav = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -151,7 +151,7 @@ const Nav = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -171,7 +171,7 @@ const Nav = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10, transition: { delay: 0.3 } }}
                 transition={{ duration: 0.3 }}
-                className="absolute top-full px-10 pt-10 pb-[100vh] left-0 w-full bg-white dark:bg-[#0e0e0e] shadow-md flex flex-col lg:hidden"
+                className="absolute left-0 top-full flex w-full flex-col bg-white px-10 pb-[100vh] pt-10 shadow-md dark:bg-[#0e0e0e] lg:hidden"
               >
                 {navLinks.map((link, index) => (
                   <motion.div
@@ -181,12 +181,12 @@ const Nav = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="flex flex-col w-full gap-5" // Full width for mobile
+                    className="flex w-full flex-col gap-5" // Full width for mobile
                   >
                     <Link
                       href={link.href}
                       onClick={() => toggleMenu()}
-                      className="p-4 text-xl font-semibold text-[#0c5dff] lowercase transition-colors duration-500 rounded-sm  dark:text-white hover:bg-gray-100 dark:hover:bg-[#171717]"
+                      className="rounded-sm p-4 text-xl font-semibold lowercase text-[#0c5dff] transition-colors duration-500 hover:bg-gray-100 dark:text-white dark:hover:bg-[#171717]"
                     >
                       {link.name}
                     </Link>
@@ -202,7 +202,7 @@ const Nav = () => {
               <Link
                 key={link.href} // Unique key
                 href={link.href}
-                className="text-xl font-semibold font-sans text-stone-900 lowercase transition-colors duration-300 dark:text-white lg:hover:opacity-80"
+                className="font-sans text-xl font-semibold lowercase text-stone-900 transition-colors duration-300 dark:text-white lg:hover:opacity-80"
               >
                 {link.name}
               </Link>

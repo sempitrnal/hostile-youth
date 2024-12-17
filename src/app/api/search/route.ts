@@ -1,9 +1,9 @@
-import { client } from "@/sanity/client";
-import { NextRequest, NextResponse } from "next/server";
+import { client } from '@/sanity/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const query = searchParams.get("query") || "";
+  const query = searchParams.get('query') || '';
 
   if (!query) {
     return NextResponse.json({ news: [], bands: [] });
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     const results = await client.fetch(SEARCH_QUERY);
     return NextResponse.json(results);
   } catch (error) {
-    console.error("Search error:", error);
-    return NextResponse.json({ error: "Failed to fetch search results" });
+    console.error('Search error:', error);
+    return NextResponse.json({ error: 'Failed to fetch search results' });
   }
 }

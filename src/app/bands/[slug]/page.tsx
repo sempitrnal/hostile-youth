@@ -1,16 +1,16 @@
-import BandPageComponent from "@/components/BandPageComponent";
+import BandPageComponent from '@/components/BandPageComponent';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { client, urlFor } from "@/sanity/client";
-import { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Band } from "../page";
+} from '@/components/ui/breadcrumb';
+import { client, urlFor } from '@/sanity/client';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { Band } from '../page';
 
 const BAND_QUERY = `*[_type == "band" && slug.current == $slug][0]`;
 interface BandPageProps {
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? [{ url: urlFor(bandData?.image)?.url()!, alt: bandData?.bandName }]
         : [],
       url: `https://hostile-youth.vercel.app/bands/${slug}`,
-      type: "website",
+      type: 'website',
     },
   };
 }
@@ -57,8 +57,8 @@ const BandPage = async ({ params }: BandPageProps) => {
   if (!band) return notFound();
 
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "MusicGroup",
+    '@context': 'https://schema.org',
+    '@type': 'MusicGroup',
     name: band.bandName,
     description: band.bandDescription,
     image: urlFor(band.image)?.url()!,
@@ -75,7 +75,7 @@ const BandPage = async ({ params }: BandPageProps) => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
+              className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground"
               href="/"
             >
               Home
@@ -84,7 +84,7 @@ const BandPage = async ({ params }: BandPageProps) => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <Link
-              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
+              className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground"
               href="/bands"
             >
               Bands
@@ -92,7 +92,7 @@ const BandPage = async ({ params }: BandPageProps) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className=" text-xl text-stone-800 dark:text-white transition-colors font-black font-sans hover:text-foreground">
+            <BreadcrumbPage className="font-sans text-xl font-black text-stone-800 transition-colors hover:text-foreground dark:text-white">
               {band.bandName}
             </BreadcrumbPage>
           </BreadcrumbItem>

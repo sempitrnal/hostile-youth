@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import BandCard from "@/components/BandCard";
-import PostCard from "@/components/PostCard";
+import BandCard from '@/components/BandCard';
+import PostCard from '@/components/PostCard';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { urlFor } from "@/sanity/client";
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-import { Band } from "../bands/page";
+} from '@/components/ui/breadcrumb';
+import { urlFor } from '@/sanity/client';
+import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { Band } from '../bands/page';
 
 interface NewsResult {
   _id: string;
@@ -47,7 +47,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.4, ease: "easeInOut" },
+    transition: { duration: 0.4, ease: 'easeInOut' },
   },
 };
 
@@ -55,8 +55,8 @@ export default function SearchPage() {
   return (
     <Suspense
       fallback={
-        <main className="container max-w-4xl min-h-screen p-4 mx-auto overflow-x-hidden lg:p-8">
-          <p className="uppercase font-dela">Loading...</p>
+        <main className="container mx-auto min-h-screen max-w-4xl overflow-x-hidden p-4 lg:p-8">
+          <p className="font-dela uppercase">Loading...</p>
         </main>
       }
     >
@@ -66,7 +66,7 @@ export default function SearchPage() {
 }
 function SearchContent() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("q") || "";
+  const query = searchParams.get('q') || '';
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<{
     news: NewsResult[];
@@ -81,12 +81,12 @@ function SearchContent() {
       setLoading(true);
       try {
         const res = await fetch(
-          `/api/search?query=${encodeURIComponent(query)}`
+          `/api/search?query=${encodeURIComponent(query)}`,
         );
         const data = await res.json();
         setResults(data);
       } catch (error) {
-        console.error("Search error:", error);
+        console.error('Search error:', error);
       } finally {
         setLoading(false);
       }
@@ -96,12 +96,12 @@ function SearchContent() {
   }, [query]);
 
   return (
-    <main className="container max-w-4xl min-h-screen p-4 mx-auto overflow-x-hidden lg:p-8">
+    <main className="container mx-auto min-h-screen max-w-4xl overflow-x-hidden p-4 lg:p-8">
       <Breadcrumb className="mb-10">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link
-              className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground"
+              className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground"
               href="/"
             >
               Home
@@ -109,22 +109,22 @@ function SearchContent() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className="lowercase text-xl transition-colors font-semibold font-sans hover:text-foreground">
+            <BreadcrumbPage className="font-sans text-xl font-semibold lowercase transition-colors hover:text-foreground">
               search
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h1 className="mb-10 text-xl lowercase font-bold font-sans">
+      <h1 className="mb-10 font-sans text-xl font-bold lowercase">
         Search Results for "{query}"
       </h1>
 
       {loading && (
-        <p className="text-xl lowercase font-bold font-sans">huwat sa...</p>
+        <p className="font-sans text-xl font-bold lowercase">huwat sa...</p>
       )}
 
       {!loading && !results.news.length && !results.bands.length && (
-        <p className="text-xl lowercase font-bold font-sans">
+        <p className="font-sans text-xl font-bold lowercase">
           No results found.
         </p>
       )}
@@ -142,7 +142,7 @@ function SearchContent() {
             <motion.section variants={itemVariants}>
               <motion.h2
                 variants={itemVariants}
-                className="text-5xl mb-5 lowercase font-semibold font-sans"
+                className="mb-5 font-sans text-5xl font-semibold lowercase"
               >
                 News
               </motion.h2>
@@ -164,7 +164,7 @@ function SearchContent() {
             <motion.section variants={itemVariants}>
               <motion.h2
                 variants={itemVariants}
-                className="text-5xl mb-5 lowercase font-semibold font-sans"
+                className="mb-5 font-sans text-5xl font-semibold lowercase"
               >
                 Bands
               </motion.h2>

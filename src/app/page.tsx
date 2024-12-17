@@ -1,7 +1,7 @@
-import { type SanityDocument } from "next-sanity";
+import { type SanityDocument } from 'next-sanity';
 
-import PostCard from "@/components/PostCard";
-import { client, urlFor } from "@/sanity/client";
+import PostCard from '@/components/PostCard';
+import { client, urlFor } from '@/sanity/client';
 
 const POSTS_QUERY = `*[
   _type == "post"
@@ -12,33 +12,33 @@ const options = { next: { revalidate: 60 } };
 
 export const generateMetadata = async () => {
   return {
-    title: "Hostile Youth Records | Home",
+    title: 'Hostile Youth Records | Home',
     description:
-      "Welcome to Your Hostile Youth Records. Discover the latest news, posts, and updates.",
+      'Welcome to Your Hostile Youth Records. Discover the latest news, posts, and updates.',
     openGraph: {
-      title: "Hostile Youth Records | Home",
+      title: 'Hostile Youth Records | Home',
       description:
-        "Explore the latest news and articles on Your Blog Name, your source for updates.",
-      url: "https://hostile-youth.vercel.app",
+        'Explore the latest news and articles on Your Blog Name, your source for updates.',
+      url: 'https://hostile-youth.vercel.app',
       images: [
         {
-          url: "https://hostile-youth.vercel.app/assets/hostile-youth.jpg",
-          alt: "hostile youth",
+          url: 'https://hostile-youth.vercel.app/assets/hostile-youth.jpg',
+          alt: 'hostile youth',
           width: 1200,
           height: 630,
         },
       ],
-      type: "website",
+      type: 'website',
     },
     twitter: {
-      card: "summary_large_image",
-      title: "Hostile Youth Records | Home",
+      card: 'summary_large_image',
+      title: 'Hostile Youth Records | Home',
       description:
-        "Welcome to Your Hostile Youth Records. Discover the latest news, posts, and updates.",
+        'Welcome to Your Hostile Youth Records. Discover the latest news, posts, and updates.',
       images: [
         {
-          url: "https://hostile-youth.vercel.app/assets/hostile-youth.jpg",
-          alt: "hostile youth",
+          url: 'https://hostile-youth.vercel.app/assets/hostile-youth.jpg',
+          alt: 'hostile youth',
           width: 1200,
           height: 630,
         },

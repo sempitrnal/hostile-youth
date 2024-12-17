@@ -1,10 +1,10 @@
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
+import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
 
 const navLinks = [
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Bands", href: "/bands" },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Bands', href: '/bands' },
 ];
 
 // Variants for the parent container
@@ -39,14 +39,14 @@ const NavMenu = ({
           animate="visible"
           exit="hidden"
           variants={menuVariants}
-          className="lg:flex lg:gap-5 items-center absolute lg:relative top-full left-0 w-full lg:w-auto border bg-white dark:bg-[#0e0e0e] shadow-md flex flex-col lg:flex-row"
+          className="absolute left-0 top-full flex w-full flex-col items-center border bg-white shadow-md dark:bg-[#0e0e0e] lg:relative lg:flex lg:w-auto lg:flex-row lg:gap-5"
         >
           {navLinks.map((link) => (
             <motion.div key={link.href} variants={linkVariants}>
               <Link
                 href={link.href}
                 onClick={() => window.innerWidth < 1024 && toggleMenu()}
-                className="lg:hover:opacity-80 uppercase font-dela font-extrabold text-xl text-yellow-500 dark:text-white lg:hover:bg-transparent hover:bg-[#f5f5f5] dark:hover:bg-[#141414] dark:hover:opacity-70 border-b lg:border-none w-full align-middle transition-colors duration-300 p-8 lg:p-0 drop-shadow-[0_35px_35px_rgba(0,0,0,0.795)]"
+                className="w-full border-b p-8 align-middle font-dela text-xl font-extrabold uppercase text-yellow-500 drop-shadow-[0_35px_35px_rgba(0,0,0,0.795)] transition-colors duration-300 hover:bg-[#f5f5f5] dark:text-white dark:hover:bg-[#141414] dark:hover:opacity-70 lg:border-none lg:p-0 lg:hover:bg-transparent lg:hover:opacity-80"
               >
                 {link.name}
               </Link>

@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { Band } from "@/app/bands/page";
-import BandCard from "@/components/BandCard";
-import { useMemo, useState } from "react";
-import { Input } from "./ui/input";
+import { Band } from '@/app/bands/page';
+import BandCard from '@/components/BandCard';
+import { useMemo, useState } from 'react';
+import { Input } from './ui/input';
 
 const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   // Filter bands locally based on search query
   const filteredBands = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return initialBands.filter(
       (band) =>
         band.bandName.toLowerCase().includes(query) ||
-        band.bandDescription.toLowerCase().includes(query)
+        band.bandDescription.toLowerCase().includes(query),
     );
   }, [searchQuery, initialBands]);
 
   // Group bands alphabetically for display
   const groupedBands = useMemo(() => {
     return filteredBands.reduce((acc: Record<string, Band[]>, band) => {
-      const firstLetter = band.bandName[0]?.toUpperCase() || "#";
+      const firstLetter = band.bandName[0]?.toUpperCase() || '#';
       if (!acc[firstLetter]) acc[firstLetter] = [];
       acc[firstLetter].push(band);
       return acc;
@@ -29,7 +29,7 @@ const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
 
   // Handle search input
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.replace(/[^\w\s]/gi, "").trim();
+    const query = e.target.value.replace(/[^\w\s]/gi, '').trim();
     setSearchQuery(query);
   };
 
@@ -62,7 +62,7 @@ const BandsList = ({ initialBands }: { initialBands: Band[] }) => {
               .sort()
               .map((letter) => (
                 <div key={letter} className="mb-6">
-                  <h2 className="mb-4 text-4xl font-sans lowercase font-bold">
+                  <h2 className="mb-4 font-sans text-4xl font-bold lowercase">
                     {letter}
                   </h2>
                   <div className="flex flex-col gap-5">

@@ -1,15 +1,15 @@
-"use client";
-import { urlFor } from "@/sanity/client";
-import { motion } from "framer-motion";
-import { SanityDocument } from "next-sanity";
-import PostImage from "./PostImage";
+'use client';
+import { urlFor } from '@/sanity/client';
+import { motion } from 'framer-motion';
+import { SanityDocument } from 'next-sanity';
+import PostImage from './PostImage';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
+} from './ui/carousel';
 
 const PostPagePhotosCarousel = ({ post }: { post: SanityDocument }) => {
   return (
@@ -46,7 +46,7 @@ const PostPagePhotosCarousel = ({ post }: { post: SanityDocument }) => {
           duration: 0.3,
           delay: 1.5,
         }}
-        className="lg:hidden flex justify-center items-center mt-5 text-sm text-gray-500 dark:text-gray-400"
+        className="mt-5 flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 lg:hidden"
       >
         swipe to view more
       </motion.div>

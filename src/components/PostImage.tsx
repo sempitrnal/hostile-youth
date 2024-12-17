@@ -1,7 +1,7 @@
-"use client";
-import Image from "next/image";
-import { useState } from "react";
-import { Skeleton } from "./ui/skeleton"; // Assume this is a reusable skeleton component
+'use client';
+import Image from 'next/image';
+import { useState } from 'react';
+import { Skeleton } from './ui/skeleton'; // Assume this is a reusable skeleton component
 
 export default function PostImage({
   image,
@@ -13,22 +13,22 @@ export default function PostImage({
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="relative w-full h-80">
+    <div className="relative h-80 w-full">
       {/* Loader */}
       {isLoading && (
-        <Skeleton className="absolute top-0 left-0 w-full h-full rounded-md" />
+        <Skeleton className="absolute left-0 top-0 h-full w-full rounded-md" />
       )}
 
       {/* Image */}
       <Image
-        src={image || "/fallback.jpg"} // Fallback for invalid URLs
-        alt={alt || "Image"}
+        src={image || '/fallback.jpg'} // Fallback for invalid URLs
+        alt={alt || 'Image'}
         width={1920}
         height={1080}
         priority
         fetchPriority="high"
-        className={`object-cover w-full h-full transition-opacity duration-500 ${
-          isLoading ? "opacity-0" : "opacity-100"
+        className={`h-full w-full object-cover transition-opacity duration-500 ${
+          isLoading ? 'opacity-0' : 'opacity-100'
         }`}
         onLoad={() => setIsLoading(false)} // Set loading to false when done
       />
