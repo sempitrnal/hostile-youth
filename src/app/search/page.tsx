@@ -29,7 +29,7 @@ interface BandResult {
   bandName: string;
   slug: { current: string };
   bandDescription: string;
-  image?: string;
+  image?: any;
 }
 const containerVariants = {
   hidden: { opacity: 0 },
