@@ -13,5 +13,7 @@ const nextConfig: NextConfig = {
     ],
   },
 };
-
+module.exports = {
+  "*.{js,ts,jsx,tsx}": ["eslint --fix", "prettier --write", "git add"],
+};
 export default nextConfig;
