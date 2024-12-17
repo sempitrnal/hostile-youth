@@ -1,20 +1,14 @@
-import prettierConfig from "eslint-config-prettier";
-import pluginReact from "eslint-plugin-react";
 import globals from "globals";
+import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
+
+/** @type {import('eslint').Linter.Config[]} */
 export default [
-  {
-    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
-    languageOptions: {
-      globals: globals.browser,
-    },
-    rules: {
-      "no-unused-vars": ["error", { args: "none", ignoreRestSiblings: true }],
-    },
-  },
+  {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"]},
+  {languageOptions: { globals: globals.browser }},
+  pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
-  prettierConfig, // Disables rules that conflict with Prettier
 ];
