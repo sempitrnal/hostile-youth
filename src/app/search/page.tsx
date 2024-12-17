@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { urlFor } from "@/sanity/client";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
