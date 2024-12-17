@@ -69,6 +69,7 @@ const Nav = () => {
   const searchHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSearchOpen(false);
+    if (isMenuOpen) setIsMenuOpen(false);
     // Redirect to search page with query
     router.push(`/search?q=${searchQuery}`);
   };
@@ -78,7 +79,7 @@ const Nav = () => {
         hasShadow ? "shadow-sm dark:shadow-[rgba(229,229,229,0.17)]" : ""
       } dark:bg-[#0e0e0e]`}
     >
-      <div className="container flex items-center justify-between max-w-4xl p-2 mx-auto ">
+      <div className="container flex items-center justify-between max-w-4xl p-4 mx-auto ">
         {/* Logo */}
         <Link className="cursor-pointer hover:opacity-90" href="/">
           <Image

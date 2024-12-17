@@ -33,7 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fffef4] dark:bg-[#0e0e0e] transition-colors  dark:text-gray-100`}
       >
         <Nav />
-        <div className="container  max-w-4xl min-h-screen px-2 pt-10   mx-auto  border-[#333] lg:pt-10 pb-[15rem]">
+        <div className="container  max-w-4xl min-h-screen px-4 pt-10   mx-auto  border-[#333] lg:pt-10 pb-[15rem]">
           {children}
         </div>
         <Footer />

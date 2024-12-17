@@ -1,5 +1,6 @@
 "use client";
 
+import BandCard from "@/components/BandCard";
 import PostCard from "@/components/PostCard";
 import {
   Breadcrumb,
@@ -14,6 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { Band } from "../bands/page";
 
 interface NewsResult {
   _id: string;
@@ -69,7 +71,7 @@ function SearchContent() {
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<{
     news: NewsResult[];
-    bands: BandResult[];
+    bands: Band[];
   }>({
     news: [],
     bands: [],
@@ -170,26 +172,7 @@ function SearchContent() {
               <motion.div variants={containerVariants} className="grid gap-6">
                 {results.bands.map((band) => (
                   <motion.div key={band._id} variants={itemVariants}>
-                    <Link
-                      href={`/bands/${band.slug.current}`}
-                      className="flex items-center gap-4 hover:underline"
-                    >
-                      {band.image && (
-                        <Image
-                          src={urlFor(band.image)?.url()!}
-                          alt={band.bandName}
-                          width={300}
-                          height={300}
-                          className="object-cover w-20 h-20 rounded-full aspect-square"
-                        />
-                      )}
-                      <div>
-                        <h3 className="text-lg font-medium">{band.bandName}</h3>
-                        <p className="text-sm text-gray-600">
-                          {band.bandDescription}
-                        </p>
-                      </div>
-                    </Link>
+                    <BandCard band={band} />
                   </motion.div>
                 ))}
               </motion.div>

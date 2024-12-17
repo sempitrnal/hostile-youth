@@ -23,7 +23,7 @@ export default function PostCard({
       href={`/${post.slug.current}`}
     >
       <div
-        className={`relative transition-[width]  ${searchPage ? "w-[10rem]" : "w-[90%] sm:w-[25rem] lg:w-[30rem]"} h-auto  `}
+        className={`relative transition-[width]  ${searchPage ? "w-[10rem]" : "w-full sm:w-[25rem] lg:w-[30rem]"} h-auto  `}
       >
         {/* Loader */}
 
@@ -50,7 +50,7 @@ export default function PostCard({
       {/* Text with Skeleton */}
 
       {isLoading ? (
-        <div className="w-[90%] mt-4 lg:mt-8  lg:w-full flex  flex-col items-start lg:items-start  gap-3  ">
+        <div className="w-full mt-4 lg:mt-8  lg:w-full flex  flex-col items-start lg:items-start  gap-3  ">
           <Skeleton className="w-full h-4 lg:h-8 " />
           <Skeleton className="w-[90%] h-4 lg:h-8 " />
           <Skeleton className="w-[80%] h-4 lg:h-8" />
@@ -61,7 +61,7 @@ export default function PostCard({
         </div>
       ) : (
         <div
-          className={`w-[90%] lg:w-full flex  flex-col items-start lg:items-start  ${searchPage ? "gap-1" : "gap-1  lg:gap-5"}`}
+          className={`w-full flex  flex-col items-start lg:items-start  ${searchPage ? "gap-1" : "gap-1  lg:gap-5"}`}
         >
           <h2
             className={`${searchPage ? "text-lg sm:text-xl lg:text-3xl " : "text-3xl sm:text-5xl lg:text-5xl "} lg:text-start  transition-all   group-hover/link:underline  duration-300 font-medium font-sans   text-black  dark:text-white lowercase`}
