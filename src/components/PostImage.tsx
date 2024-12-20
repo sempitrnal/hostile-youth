@@ -13,17 +13,17 @@ export default function PostImage({
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="relative h-80 w-full">
+    <div className="relative h-full w-full">
       {/* Loader */}
       {isLoading && (
-        <Skeleton className="absolute left-0 top-0 h-full w-full rounded-md" />
+        <Skeleton className="absolute left-0 top-0 h-full w-full rounded-sm" />
       )}
 
       {/* Image */}
       <Image
         src={image || '/fallback.jpg'} // Fallback for invalid URLs
         alt={alt || 'Image'}
-        width={1920}
+        width={1080}
         height={1080}
         priority
         fetchPriority="high"

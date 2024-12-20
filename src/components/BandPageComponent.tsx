@@ -4,6 +4,7 @@ import { PortableText, PortableTextReactComponents } from 'next-sanity';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaBandcamp, FaFacebook, FaInstagram, FaSpotify } from 'react-icons/fa';
+import GenreBadge from './GenreBadge';
 
 const BandPageComponent = ({ band }: { band: Band }) => {
   const components: Partial<PortableTextReactComponents> = {
@@ -80,7 +81,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
         </blockquote>
       ),
       normal: ({ children }) => (
-        <p className="my-2 text-justify font-sans text-lg text-gray-500 dark:text-gray-200">
+        <p className="my-2 text-justify font-sans text-lg text-stone-600 dark:text-gray-200">
           {children}
         </p>
       ),
@@ -105,18 +106,33 @@ const BandPageComponent = ({ band }: { band: Band }) => {
   };
 
   const { socialLinks } = band;
-
+  const { genre } = band;
+  console.log(genre);
   const bandImageUrl = urlFor(band.image)?.url()!;
 
   return (
     <>
       <div className="mt-10">
-        <h1 className="font-sans text-5xl font-medium text-stone-800 transition-colors dark:text-white lg:text-7xl">
-          {band.bandName}
-        </h1>
-        <p className="text-stone-500 dark:text-stone-200">
-          {band.bandDescription}
-        </p>
+        <div className="flex items-center gap-5">
+          <Image
+            src={bandImageUrl}
+            alt={band.bandName}
+            width={500}
+            height={500}
+            className="aspect-square h-24 w-24 rounded-full object-cover"
+          />
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
+              <h1 className="font-sans text-5xl font-medium text-stone-800 transition-colors dark:text-white lg:text-7xl">
+                {band.bandName}
+              </h1>
+              <p className="text-stone-500 dark:text-stone-200">
+                {band.bandDescription}
+              </p>
+            </div>
+            {genre && <GenreBadge genre={genre} />}
+          </div>
+        </div>
       </div>
       <div className="my-5 flex items-center gap-2">
         {socialLinks && socialLinks.instagram && (
@@ -156,13 +172,7 @@ const BandPageComponent = ({ band }: { band: Band }) => {
           </Link>
         )}
       </div>
-      <Image
-        src={bandImageUrl}
-        alt={band.bandName}
-        width={1920}
-        height={1080}
-        className="h-full w-full rounded-md object-cover"
-      />
+
       {Array.isArray(band.body) && (
         <PortableText value={band.body} components={components} />
       )}

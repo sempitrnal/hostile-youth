@@ -79,7 +79,7 @@ const Nav = () => {
         hasShadow ? 'shadow-sm dark:shadow-[rgba(229,229,229,0.17)]' : ''
       } dark:bg-[#0e0e0e]`}
     >
-      <div className="container mx-auto flex max-w-4xl items-center justify-between p-4">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between p-4">
         {/* Logo */}
         <Link className="cursor-pointer hover:opacity-90" href="/">
           <Image

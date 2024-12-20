@@ -225,7 +225,7 @@ export default async function PostPage({ params }: PostPageProps) {
         {Array.isArray(post.images) && (
           <h2 className="mb-5 mt-8 font-sans text-2xl font-bold">photos</h2>
         )}
-        <PostPagePhotosCarousel post={post} />
+        {post.images && <PostPagePhotosCarousel post={post} />}
         {Array.isArray(post.body) && (
           <PortableText value={post.body} components={components} />
         )}

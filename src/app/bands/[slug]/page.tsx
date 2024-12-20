@@ -54,6 +54,7 @@ const BandPage = async ({ params }: BandPageProps) => {
   const { slug } = await params;
 
   const band = await getBandData(slug);
+  console.log('🚀 ~ BandPage ~ band:', band);
   if (!band) return notFound();
 
   const structuredData = {
@@ -64,7 +65,6 @@ const BandPage = async ({ params }: BandPageProps) => {
     image: urlFor(band.image)?.url()!,
     url: band.url,
   };
-
   return (
     <main className="">
       <script
