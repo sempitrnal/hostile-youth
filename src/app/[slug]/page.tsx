@@ -1,3 +1,4 @@
+import PostImage from '@/components/PostImage';
 import PostPagePhotosCarousel from '@/components/PostPagePhotosCarousel';
 import {
   Breadcrumb,
@@ -49,6 +50,7 @@ export async function generateMetadata({ params }: PostPageProps) {
         ? post.body[0]?.children[0]?.text?.slice(0, 150) || post.title
         : post.title,
       url: `https://hostile-youth.vercel.app/${(await params).slug}`,
+      image: urlFor(post.image)?.url(),
       images: post.images
         ? post.images.map((image: any) => ({
             url: urlFor(image)?.url(),
@@ -81,7 +83,6 @@ async function getPostData(slug: string): Promise<SanityDocument | null> {
 }
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostData((await params).slug);
-  console.log('🚀 ~ PostPage ~ post:', post);
   if (!post) {
     return <div>Post not found</div>;
   }
@@ -169,7 +170,7 @@ export default async function PostPage({ params }: PostPageProps) {
         </blockquote>
       ),
       normal: ({ children }) => (
-        <p className="my-2 text-justify text-lg text-gray-600 dark:text-gray-200">
+        <p className="my-2 text-justify text-lg text-stone-600 dark:text-gray-200">
           {children}
         </p>
       ),
@@ -213,22 +214,26 @@ export default async function PostPage({ params }: PostPageProps) {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-
-      <h1 className="mb-2 text-4xl font-bold">{post.title}</h1>
-      <div className="prose">
-        <p className="text-stone-500 dark:text-stone-200">
-          by {post.publisherName}
-        </p>
-        <p className="text-sm text-stone-400 dark:text-stone-400">
-          {formatDate(new Date(post.publishedAt), 'MMMM DD, YYYY')}
-        </p>
-        {Array.isArray(post.images) && (
-          <h2 className="mb-5 mt-8 font-sans text-2xl font-bold">photos</h2>
-        )}
-        {post.images && <PostPagePhotosCarousel post={post} />}
-        {Array.isArray(post.body) && (
-          <PortableText value={post.body} components={components} />
-        )}
+      <div className="lg:px-20">
+        <h1 className="mb-2 text-4xl font-bold">{post.title}</h1>
+        <div className="">
+          <p className="text-stone-500 dark:text-stone-200">
+            by {post.publisherName}
+          </p>
+          <p className="text-sm text-stone-400 dark:text-stone-400">
+            {formatDate(new Date(post.publishedAt), 'MMMM DD, YYYY')}
+          </p>
+          <div className="my-5">
+            <PostImage alt={post.title} image={urlFor(post.image)?.url()!} />
+          </div>
+          {Array.isArray(post.images) && (
+            <h2 className="mb-5 mt-8 font-sans text-2xl font-bold">photos</h2>
+          )}
+          {post.images && <PostPagePhotosCarousel post={post} />}
+          {Array.isArray(post.body) && (
+            <PortableText value={post.body} components={components} />
+          )}
+        </div>
       </div>
     </main>
   );

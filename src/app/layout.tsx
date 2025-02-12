@@ -33,10 +33,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} bg-[#fffef4] antialiased transition-colors dark:bg-[#0e0e0e] dark:text-gray-100`}
       >
         <Nav />
-        <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-between px-4 pb-[15rem] pt-10 lg:flex-row lg:pt-10">
+        <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-between px-4 pb-[15rem] pt-10 lg:flex-row lg:pt-10">
           {/* Sidebar */}
 
-          <div className="container min-h-screen w-full border-[#333] lg:w-[75%]">
+          <div className="container min-h-screen w-full border-[#333] lg:w-[100%]">
             {children}
           </div>
           {/* <div className="sticky top-[7.5rem] h-full w-max bg-transparent p-5 transition-[width]">
