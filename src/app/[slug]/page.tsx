@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PostPageProps) {
   }
 
   return {
-    title: `${post.title} | Hostile Youth Records`, // Replace "Your Blog Name"
+    title: `${post.title} | Hostile Youth Records`,
     description: post.body
       ? post.body[0]?.children[0]?.text?.slice(0, 150) || post.title
       : post.title, // Truncate first text block or fallback to title
@@ -50,15 +50,31 @@ export async function generateMetadata({ params }: PostPageProps) {
         ? post.body[0]?.children[0]?.text?.slice(0, 150) || post.title
         : post.title,
       url: `https://hostile-youth.vercel.app/${(await params).slug}`,
-      image: urlFor(post.image)?.url(),
-      images: post.images
-        ? post.images.map((image: any) => ({
-            url: urlFor(image)?.url(),
-            alt: post.title,
-            width: 1200,
-            height: 630,
-          }))
-        : [],
+      images:
+        post.images && post.images.length > 0
+          ? post.images.map((image: any) => ({
+              url: urlFor(image)?.url() || '',
+              alt: post.title,
+              width: 1200,
+              height: 630,
+            }))
+          : post.image
+            ? [
+                {
+                  url: urlFor(post.image)?.url() || '',
+                  alt: post.title,
+                  width: 1200,
+                  height: 630,
+                },
+              ]
+            : [
+                {
+                  url: urlFor(post.image)?.url(),
+                  alt: 'Hostile Youth Records',
+                  width: 1200,
+                  height: 630,
+                },
+              ],
       type: 'article',
       publishedTime: post.publishedAt,
       siteName: 'Hostile Youth Records',
@@ -69,12 +85,25 @@ export async function generateMetadata({ params }: PostPageProps) {
       description: post.body
         ? post.body[0]?.children[0]?.text?.slice(0, 150) || post.title
         : post.title,
-      images: post.images
-        ? post.images.map((image: any) => ({
-            url: urlFor(image)?.url(),
-            alt: post.title,
-          }))
-        : [],
+      images:
+        post.images && post.images.length > 0
+          ? post.images.map((image: any) => ({
+              url: urlFor(image)?.url() || '',
+              alt: post.title,
+            }))
+          : post.image
+            ? [
+                {
+                  url: urlFor(post.image)?.url() || '',
+                  alt: post.title,
+                },
+              ]
+            : [
+                {
+                  url: urlFor(post.image)?.url(),
+                  alt: 'Hostile Youth Records',
+                },
+              ],
     },
   };
 }
